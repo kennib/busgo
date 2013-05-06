@@ -14,4 +14,6 @@ function stopCtrl($scope) {
 		center: new google.maps.LatLng($scope.stop.lat, $scope.stop.lon),
 		mapTypeId: google.maps.MapTypeId.ROADMAP
 	};
+	
+	enableGestures($scope);
 }
