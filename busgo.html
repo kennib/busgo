@@ -18,11 +18,14 @@
 	</head>
 	
 	<body ng-app="busgo" ng-controller="stopCtrl">
-		<div id="mapDisplay" ui-map="map" ui-options="mapOptions"></div>
-		<div id="mapControls">
+		<div id="mapDisplay" ui-map="map" ui-options="mapOptions">
 			<div ng-repeat="marker in markers" ui-map-marker="marker"></div>
+			<div ui-map-marker="stopMarker" color="stop.color"></div>
+		</div>
+		<div id="mapControls">
 			<h2>Map Controls</h2>
 			{{location}}
+			{{stop}}
 		</div>
 	</body>
 </html>
