@@ -96,6 +96,24 @@
               bindMapEvents(scope, events, newObject, elm);
             }
           });
+          
+          scope.$watch(attrs["color"], function (newColor) {
+            if (newColor) {
+              if (directiveName == "uiMapMarker") {
+                var pinImage = new google.maps.MarkerImage("http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|" + newColor,
+                  new google.maps.Size(21, 34),
+                  new google.maps.Point(0,0),
+                  new google.maps.Point(10, 34));
+                var pinShadow = new google.maps.MarkerImage("http://chart.apis.google.com/chart?chst=d_map_pin_shadow",
+                  new google.maps.Size(40, 37),
+                  new google.maps.Point(0, 0),
+                  new google.maps.Point(12, 35));
+                
+                scope[attrs[directiveName]].setIcon(pinImage);
+                scope[attrs[directiveName]].setShadow(pinShadow);
+              }
+            }
+          });
         }
       };
     }]);
