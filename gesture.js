@@ -28,7 +28,7 @@ function enableGestures(scope) {
 	// Create cursor and cursor dom element
 	var c = zig.controls.Cursor();
 	var ce = document.createElement('div');
-	ce.id = 'mycursor';
+	ce.id = 'cursor';
 	document.body.appendChild(ce);
 	 
 	// 1. show/hide cursor on session start/end
@@ -47,7 +47,7 @@ function enableGestures(scope) {
 		
 		// Move the map if the cursor is on the edge of the screen
 		var delta = 0.0004;
-		var threshold = 0.1;
+		var threshold = 0.2;
 		var latlng = scope.map.getCenter();
 		var lat = latlng.lat();
 		var lng = latlng.lng();
