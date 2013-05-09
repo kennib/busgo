@@ -12,3 +12,15 @@
 	
 	background: white;
 }
+
+#mycursor {
+	position: fixed;
+	display : none;
+	width : 40px;
+	height : 40px;
+	background-color : blue;
+}
+ 
+#mycursor.pushed {
+	background-color: red;	
+}
