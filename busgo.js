@@ -17,7 +17,7 @@ app.factory('Stop', function(Parse) {
 			return Stop.__super__.constructor.apply(this, arguments);
 		}
 		// Stop Parse class name and attributes
-		Stop.configure('stops', 'stop_code', 'stop_id', 'stop_lat', 'stop_lon', 'stop_latlng', 'stop_name');
+		Stop.configure('stops', 'stop_code', 'stop_id', 'stop_lat', 'stop_lon', 'stop_latlng', 'stop_name', '$nearsphere');
 		return Stop;
 	})(Parse.Model);
 });
@@ -95,8 +95,7 @@ function stopCtrl($scope, Stop, mapRoute) {
 		center: new google.maps.LatLng($scope.stop.lat, $scope.stop.lon),
 		mapTypeId: google.maps.MapTypeId.ROADMAP
 	};
-	
-	enableGestures($scope);
+	enableGestures($scope);	
 	
 	// Get the user's location
 	navigator.geolocation.getCurrentPosition(function(position) {
@@ -104,24 +103,29 @@ function stopCtrl($scope, Stop, mapRoute) {
 		
 		// Get the closest bus stop
 		Stop.query({
-			where: {
-				"$nearSphere": {
-					"__type": "GeoPoint",
-					"latitude": parseFloat($scope.location.lat()),
-					"longitude": parseFloat($scope.location.lng())
+			where: JSON.stringify({
+				stop_latlng: {
+					"$nearSphere": {
+						"__type": "GeoPoint",
+						"latitude": position.coords.latitude,
+						"longitude": position.coords.longitude
+					}
 				}
-			},
+			}),
 			limit: 1
 		}).then(function(stops) {
 			var stop = stops[0];
 			$scope.stop = stop;
+			var stopLatlng = new google.maps.LatLng(stop.stop_lat, stop.stop_lon);
 			// Create a marker for the closest bus stop
 			$scope.stop.color = "00FF00";
 			$scope.stopMarker = new google.maps.Marker({
 				map: $scope.map,
-				position: new google.maps.LatLng(stop.stop_lat, stop.stop_lon),
+				position: stopLatlng,
 				zIndex: 9999999 // Should appear in front of other markers
 			});
+			// Move the map to the stop
+			$scope.map.panTo(stopLatlng);
 		});
 	});
 	
