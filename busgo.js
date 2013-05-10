@@ -142,7 +142,8 @@ function stopCtrl($scope, Stop, mapRoute) {
 			var coord = new google.maps.LatLng(stop.stop_lat, stop.stop_lon);
 			var marker = new google.maps.Marker({
 				map: $scope.map,
-				position: coord
+				position: coord,
+				title: stop.stop_name
 			});
 			
 			// Add it to the list of markers
