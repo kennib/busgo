@@ -112,7 +112,7 @@ function stopCtrl($scope, Stop, mapRoute) {
 					}
 				}
 			}),
-			limit: 1
+			limit: 1000
 		}).then(function(stops) {
 			var stop = stops[0];
 			$scope.stop = stop;
@@ -122,33 +122,30 @@ function stopCtrl($scope, Stop, mapRoute) {
 			$scope.stopMarker = new google.maps.Marker({
 				map: $scope.map,
 				position: stopLatlng,
+				title: stop.stop_name,
 				zIndex: 9999999 // Should appear in front of other markers
 			});
 			// Move the map to the stop
 			$scope.map.panTo(stopLatlng);
+			
+			// Add bus stop markers
+			$scope.stopMarkers = [];
+			for (var s=1; s<stops.length; s++) {
+				// Get the stop object
+				var stop = stops[s];
+				
+				// Create a google maps marker
+				var coord = new google.maps.LatLng(stop.stop_lat, stop.stop_lon);
+				var marker = new google.maps.Marker({
+					map: $scope.map,
+					position: coord,
+					title: stop.stop_name
+				});
+				
+				// Add it to the list of markers
+				$scope.stopMarkers.push(marker);
+			}
 		});
-	});
-	
-	
-	// Get Bus Stop data
-	$scope.stops = [];
-	$scope.stopMarkers = [];
-	Stop.query({limit: 999999}).then(function(stops) {
-		for (var s in stops) {
-			// Get the stop object
-			var stop = stops[s];
-			
-			// Create a google maps marker
-			var coord = new google.maps.LatLng(stop.stop_lat, stop.stop_lon);
-			var marker = new google.maps.Marker({
-				map: $scope.map,
-				position: coord,
-				title: stop.stop_name
-			});
-			
-			// Add it to the list of markers
-			$scope.stopMarkers.push(marker);
-		}
 	});
 	
 	mapRoute("11954_X94", $scope);
