@@ -1,8 +1,8 @@
 (function() {
-  var module;
-  __hasProp = {}.hasOwnProperty,
-  __slice = [].slice,
-  __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
+  var module,
+    __hasProp = {}.hasOwnProperty,
+    __slice = [].slice,
+    __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
   module = angular.module('Parse', []);
 
@@ -284,8 +284,20 @@
           };
 
           return Model;
-
         })();
+
+        Parse.newModel = function() {
+          __extends(Model, Parse.Model);
+
+          function Model() {
+            return Model.__super__.constructor.apply(this, arguments);
+          }
+
+          Model.configure.apply(Model, arguments);
+
+          return Model;
+        }
+
         Parse.User = (function(_super) {
 
           __extends(User, _super);

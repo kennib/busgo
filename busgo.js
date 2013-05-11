@@ -1,6 +1,8 @@
 var app = angular.module('busgo', ['ui.map', 'Parse'])
+
 // Enable maps API
 app.value('uiMapConfig', {});
+
 // Enable Parse API
 app.config(function (ParseProvider) {
 	ParseProvider.initialize("XdeNxntxTKqBv0QvjsZfWdhKxmy74wMeqM4M42p5", "axK8ik0ppHi1smnjsQtTx04buL0M0FNKNKhb7vky");
@@ -8,45 +10,18 @@ app.config(function (ParseProvider) {
 app.run(function(Parse) {
   return Parse.auth.resumeSession();
 });
-// The bus stop object
+
+// Create Parse objects
 app.factory('Stop', function(Parse) {
-	var Stop;
-	return Stop = (function(_super) {
-		__extends(Stop, _super);
-		function Stop() {
-			return Stop.__super__.constructor.apply(this, arguments);
-		}
-		// Stop Parse class name and attributes
-		Stop.configure('stops', 'stop_code', 'stop_id', 'stop_lat', 'stop_lon', 'stop_latlng', 'stop_name', '$nearsphere');
-		return Stop;
-	})(Parse.Model);
+	return Parse.newModel('stops');
 });
-// The trip object
 app.factory('Trip', function(Parse) {
-	var Trip;
-	return Trip = (function(_super) {
-		__extends(Trip, _super);
-		function Trip() {
-			return Trip.__super__.constructor.apply(this, arguments);
-		}
-		// Trip Parse class name and attributes
-		Trip.configure('trips', 'direction_id', 'route_id', 'shape_id', 'trip_headsign', 'trip_id', 'wheelchair_accessible');
-		return Trip;
-	})(Parse.Model);
+	return Parse.newModel('trips');
 });
-// The shape object
 app.factory('Shape', function(Parse) {
-	var Shape;
-	return Shape = (function(_super) {
-		__extends(Shape, _super);
-		function Shape() {
-			return Shape.__super__.constructor.apply(this, arguments);
-		}
-		// Shape Parse class name and attributes
-		Shape.configure('shapes', 'shape_id', 'shape_pt_lat', 'shape_pt_lng', 'shape_pt_sequence');
-		return Shape;
-	})(Parse.Model);
+	return Parse.newModel('shapes');
 });
+
 // Map a route
 app.factory('mapRoute', function(Trip, Shape) {
 	return function(route_id, scope) {
