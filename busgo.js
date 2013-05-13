@@ -12,15 +12,23 @@ app.run(function(Parse) {
 });
 
 // Create Parse objects
-app.factory('Stop', function(Parse) {
-	return Parse.newModel('stops');
-});
-app.factory('Trip', function(Parse) {
-	return Parse.newModel('trips');
-});
-app.factory('Shape', function(Parse) {
-	return Parse.newModel('shapes');
-});
+var parseClasses = {
+	Stop: "stops",
+	Shape: "shapes",
+	StopTime: "stop_times",
+	Trip: "trips",
+	StopTrip: "stop_routes",
+	Route: "routes",
+};
+
+for (var className in parseClasses) {
+	var factory = function() {
+		var parseName = parseClasses[className];
+		app.factory(className, function(Parse) {
+			return Parse.newModel(parseName);
+		});
+	}();
+}
 
 // Map a route
 app.factory('mapRoute', function(Trip, Shape) {
