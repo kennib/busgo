@@ -65,7 +65,7 @@ app.factory('mapRoute', function(Trip, Shape) {
 });
 
 
-function stopCtrl($scope, Stop, mapRoute) {
+function stopCtrl($scope, Stop, StopTrip, mapRoute) {
 	$scope.stop = {
 		id: 200039,
 		name: "Central Station, Eddy Av",
@@ -111,8 +111,15 @@ function stopCtrl($scope, Stop, mapRoute) {
 			// Move the map to the stop
 			$scope.map.panTo(stopLatlng);
 			
+			// Get a list of trips this bus stop is on
+			var stoptrips = StopTrip.query({
+				where: JSON.stringify({
+					stop_id: stop.stop_id
+				})
+			});
+			
 			// Add bus stop markers
-			$scope.stopMarkers = [];
+			$scope.stopMarkers = {};
 			for (var s=1; s<stops.length; s++) {
 				// Get the stop object
 				var stop = stops[s];
@@ -126,8 +133,57 @@ function stopCtrl($scope, Stop, mapRoute) {
 				});
 				
 				// Add it to the list of markers
-				$scope.stopMarkers.push(marker);
+				$scope.stopMarkers[stop.stop_id] = marker;
 			}
+			
+			// Once we have a list of all the trips connected to this stop...
+			stoptrips.then(function(stopTrips) {
+				// Get the list of all the trips
+				var trips = []
+				for (var st in stopTrips) {
+					var stopTrip = stopTrips[st];
+					trips.push(stopTrip.route_id);
+				}
+				
+				// Find all stops on these trips
+				StopTrip.query({
+					where: JSON.stringify({
+						route_id: {"$in": trips}
+					})
+				}).then(function(stops) {				
+					// Color these stops differently
+					for (var s in stops) {
+						var stop = stops[s];
+						Stop.query({
+							where: JSON.stringify({
+								stop_id: stop.stop_id
+							})
+						}).then(function(stops) {
+							for (var s=0; s<stops.length; s++) {
+								// Get the stop object
+								var stop = stops[s];
+								
+								if ($scope.stopMarkers[stop.stop_id]) {
+									// Change stop marker color
+									$scope.stopMarkers[stop.stop_id].color = "ffff00";
+								} else {
+									// Create a google maps marker
+									var coord = new google.maps.LatLng(stop.stop_lat, stop.stop_lon);
+									var marker = new google.maps.Marker({
+										map: $scope.map,
+										position: coord,
+										title: stop.stop_name,
+										color: "ffff00"
+									});
+									
+									// Add it to the list of markers
+									$scope.stopMarkers[stop._stop_id] = marker;
+								}
+							}
+						});
+					}
+				})
+			})
 		});
 	});
 	
