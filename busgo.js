@@ -84,6 +84,22 @@ function stopCtrl($scope, Stop, StopTrip, mapRoute) {
 	navigator.geolocation.getCurrentPosition(function(position) {
 		$scope.location = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
 		
+		// Start and end markers
+		$scope.startMarker = new google.maps.Marker({
+			map: $scope.map,
+			position: $scope.location,
+			draggable: true,
+			zIndex: 2000,
+			color: "000000",
+		});
+		$scope.endMarker = new google.maps.Marker({
+			map: $scope.map,
+			position: $scope.location,
+			draggable: true,
+			zIndex: 2000,
+			color: "ffffff",
+		});
+		
 		// Get the closest bus stop
 		Stop.query({
 			where: JSON.stringify({
@@ -106,7 +122,7 @@ function stopCtrl($scope, Stop, StopTrip, mapRoute) {
 				map: $scope.map,
 				position: stopLatlng,
 				title: stop.stop_name,
-				zIndex: 9999999 // Should appear in front of other markers
+				zIndex: 1001 // Should appear in front of other markers
 			});
 			// Move the map to the stop
 			$scope.map.panTo(stopLatlng);
@@ -135,6 +151,8 @@ function stopCtrl($scope, Stop, StopTrip, mapRoute) {
 				// Add it to the list of markers
 				$scope.stopMarkers[stop.stop_id] = marker;
 			}
+			
+
 			
 			// Once we have a list of all the trips connected to this stop...
 			stoptrips.then(function(stopTrips) {
