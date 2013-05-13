@@ -21,6 +21,8 @@
 		<div id="mapDisplay" ui-map="map" ui-options="mapOptions">
 			<div ng-repeat="marker in stopMarkers" ui-map-marker="marker" color="marker.color"></div>
 			<div ui-map-marker="stopMarker" color="stop.color"></div>
+			<div ui-map-marker="startMarker" color="startMarker.color"></div>
+			<div ui-map-marker="endMarker" color="endMarker.color"></div>
 		</div>
 		<div id="mapControls">
 			<h2>Map Controls</h2>

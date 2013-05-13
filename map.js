@@ -109,8 +109,8 @@
                   new google.maps.Point(0, 0),
                   new google.maps.Point(12, 35));
                 
-                scope[attrs[directiveName]].setIcon(pinImage);
-                scope[attrs[directiveName]].setShadow(pinShadow);
+                scope.$eval(attrs[directiveName]).setIcon(pinImage);
+                scope.$eval(attrs[directiveName]).setShadow(pinShadow);
               }
             }
           });
