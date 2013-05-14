@@ -74,7 +74,7 @@ function stopCtrl($scope, Stop, StopTrip, mapRoute) {
 	};
 	
 	$scope.mapOptions = {
-		zoom: 16,
+		zoom: 15,
 		center: new google.maps.LatLng($scope.stop.lat, $scope.stop.lon),
 		mapTypeId: google.maps.MapTypeId.ROADMAP
 	};
