@@ -11,6 +11,7 @@
 		<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
 		<script src='http://cdn.zigfu.com/zigjs/zig.min.js'></script>
 		<script type="text/javascript" src="map.js"></script>
+		<script type="text/javascript" src="event.js"></script>
 		<script type="text/javascript" src="angular-parse.js"></script>
 		<!-- Scripts -->
 		<script type="text/javascript" src="busgo.js"></script>
@@ -19,7 +20,7 @@
 	
 	<body ng-app="busgo" ng-controller="stopCtrl">
 		<div id="mapDisplay" ui-map="map" ui-options="mapOptions">
-			<div ng-repeat="marker in stopMarkers" ui-map-marker="marker" color="marker.color"></div>
+			<div ng-repeat="marker in stopMarkers" ui-map-marker="marker" color="marker.color" ui-event="{'map-click':'setBusStop(marker)'}"></div>
 			<div ui-map-marker="stopMarker" color="stop.color"></div>
 			<div ui-map-marker="startMarker" color="startMarker.color"></div>
 			<div ui-map-marker="endMarker" color="endMarker.color"></div>

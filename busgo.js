@@ -1,4 +1,4 @@
-var app = angular.module('busgo', ['ui.map', 'Parse'])
+var app = angular.module('busgo', ['ui.map', 'ui.event', 'Parse'])
 
 // Enable maps API
 app.value('uiMapConfig', {});
@@ -80,6 +80,78 @@ function stopCtrl($scope, Stop, StopTrip, mapRoute) {
 	};
 	enableGestures($scope);
 	
+	$scope.setBusStop = function(marker) {
+		// Update the old and new marker colors
+		if ($scope.stopMarker)
+			$scope.stopMarker.color = "ff0000";
+		marker.color = "00ff00";
+		// Set this as the focussed stop
+		$scope.stop = marker.stop;
+		$scope.stopMarker = marker;
+		// Move the map to the stop
+		$scope.map.panTo(marker.position);
+		
+		// Update start of the trip
+		if (!$scope.start)
+			$scope.start = marker.position.lat() + ", " + marker.position.lng();
+		
+		// Get a list of trips this bus stop is on
+		var stoptrips = StopTrip.query({
+			where: JSON.stringify({
+				stop_id: $scope.stop.stop_id
+			})
+		});
+		
+		// Once we have a list of all the trips connected to this stop...
+		stoptrips.then(function(stopTrips) {
+			// Get the list of all the trips
+			var trips = []
+			for (var st in stopTrips) {
+				var stopTrip = stopTrips[st];
+				trips.push(stopTrip.route_id);
+			}
+			
+			// Find all stops on these trips
+			StopTrip.query({
+				where: JSON.stringify({
+					route_id: {"$in": trips}
+				})
+			}).then(function(stops) {
+				// Color these stops differently
+				for (var s in stops) {
+					var stop = stops[s];
+					Stop.query({
+						where: JSON.stringify({
+							stop_id: stop.stop_id
+						})
+					}).then(function(stops) {
+						for (var s=0; s<stops.length; s++) {
+							// Get the stop object
+							var stop = stops[s];
+							
+							if ($scope.stopMarkers[stop.stop_id] && stop.stop_id != $scope.stop.stop_id) {
+								// Change stop marker color
+								$scope.stopMarkers[stop.stop_id].color = "ffff00";
+							} else {
+								// Create a google maps marker
+								var coord = new google.maps.LatLng(stop.stop_lat, stop.stop_lon);
+								var marker = new google.maps.Marker({
+									map: $scope.map,
+									position: coord,
+									title: stop.stop_name,
+									color: "ffff00"
+								});
+								
+								// Add it to the list of markers
+								$scope.stopMarkers[stop._stop_id] = marker;
+							}
+						}
+					});
+				}
+			})
+		})
+	};
+	
 	// Update the directions from the Google directions service
 	var directions = new google.maps.DirectionsService(); 
 	var directionsDisplay = new google.maps.DirectionsRenderer({suppressMarkers: true});
@@ -140,7 +212,7 @@ function stopCtrl($scope, Stop, StopTrip, mapRoute) {
 			color: "ffffff",
 		});
 		
-		// Get the closest bus stop
+		// Get the closest bus stops
 		Stop.query({
 			where: JSON.stringify({
 				stop_latlng: {
@@ -153,33 +225,9 @@ function stopCtrl($scope, Stop, StopTrip, mapRoute) {
 			}),
 			limit: 1000
 		}).then(function(stops) {
-			var stop = stops[0];
-			$scope.stop = stop;
-			var stopLatlng = new google.maps.LatLng(stop.stop_lat, stop.stop_lon);
-			// Create a marker for the closest bus stop
-			$scope.stop.color = "00FF00";
-			$scope.stopMarker = new google.maps.Marker({
-				map: $scope.map,
-				position: stopLatlng,
-				title: stop.stop_name,
-				zIndex: 1001 // Should appear in front of other markers
-			});
-			// Move the map to the stop
-			$scope.map.panTo(stopLatlng);
-			// Update start of the trip
-			if (!$scope.start)
-				$scope.start = $scope.location.lat() + ", " + $scope.location.lng();
-			
-			// Get a list of trips this bus stop is on
-			var stoptrips = StopTrip.query({
-				where: JSON.stringify({
-					stop_id: stop.stop_id
-				})
-			});
-			
 			// Add bus stop markers
 			$scope.stopMarkers = {};
-			for (var s=1; s<stops.length; s++) {
+			for (var s=0; s<stops.length; s++) {
 				// Get the stop object
 				var stop = stops[s];
 				
@@ -188,61 +236,17 @@ function stopCtrl($scope, Stop, StopTrip, mapRoute) {
 				var marker = new google.maps.Marker({
 					map: $scope.map,
 					position: coord,
-					title: stop.stop_name
+					title: stop.stop_name,
+					stop: stop,
 				});
 				
 				// Add it to the list of markers
 				$scope.stopMarkers[stop.stop_id] = marker;
-			}
-			
-			// Once we have a list of all the trips connected to this stop...
-			stoptrips.then(function(stopTrips) {
-				// Get the list of all the trips
-				var trips = []
-				for (var st in stopTrips) {
-					var stopTrip = stopTrips[st];
-					trips.push(stopTrip.route_id);
-				}
 				
-				// Find all stops on these trips
-				StopTrip.query({
-					where: JSON.stringify({
-						route_id: {"$in": trips}
-					})
-				}).then(function(stops) {
-					// Color these stops differently
-					for (var s in stops) {
-						var stop = stops[s];
-						Stop.query({
-							where: JSON.stringify({
-								stop_id: stop.stop_id
-							})
-						}).then(function(stops) {
-							for (var s=0; s<stops.length; s++) {
-								// Get the stop object
-								var stop = stops[s];
-								
-								if ($scope.stopMarkers[stop.stop_id]) {
-									// Change stop marker color
-									$scope.stopMarkers[stop.stop_id].color = "ffff00";
-								} else {
-									// Create a google maps marker
-									var coord = new google.maps.LatLng(stop.stop_lat, stop.stop_lon);
-									var marker = new google.maps.Marker({
-										map: $scope.map,
-										position: coord,
-										title: stop.stop_name,
-										color: "ffff00"
-									});
-									
-									// Add it to the list of markers
-									$scope.stopMarkers[stop._stop_id] = marker;
-								}
-							}
-						});
-					}
-				})
-			})
+				// Set the closest bus stop as the focussed bus stop
+				if (s == 0) // first bus stop is the closest
+					$scope.setBusStop(marker)
+			}
 		});
 	});
 	
