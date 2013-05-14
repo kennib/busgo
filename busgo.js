@@ -78,7 +78,43 @@ function stopCtrl($scope, Stop, StopTrip, mapRoute) {
 		center: new google.maps.LatLng($scope.stop.lat, $scope.stop.lon),
 		mapTypeId: google.maps.MapTypeId.ROADMAP
 	};
-	enableGestures($scope);	
+	enableGestures($scope);
+	
+	// Update the directions from the Google directions service
+	var directions = new google.maps.DirectionsService();
+	var updateDirections = function() {
+		if ($scope.start && $scope.end) {
+			directions.route({
+				origin: $scope.start + ", Sydney",
+				destination: $scope.end + ", Sydney",
+				travelMode: google.maps.TravelMode.TRANSIT
+			}, function(result, status) {
+				if (status == google.maps.DirectionsStatus.OK) {
+					// Update start and end markers
+					var route = result.routes[0];
+					var start = route.overview_path[0];
+					var end = route.overview_path[route.overview_path.length-1];
+					$scope.startMarker.setPosition(start);
+					$scope.endMarker.setPosition(end);
+				}
+			});
+		}
+	};
+	
+	// Request directions only if not requested again within the delay time
+	var directionsRequest;
+	requestDirections = function() {
+		var delay = 1500;
+		clearTimeout(directionsRequest);
+		directionsRequest = setTimeout(function() {
+			clearTimeout(directionsRequest);
+			updateDirections();
+		}, delay);
+	};
+	
+	// Update start and end of the trip
+	$scope.$watch("start", requestDirections);
+	$scope.$watch("end", requestDirections);
 	
 	// Get the user's location
 	navigator.geolocation.getCurrentPosition(function(position) {
@@ -152,8 +188,6 @@ function stopCtrl($scope, Stop, StopTrip, mapRoute) {
 				$scope.stopMarkers[stop.stop_id] = marker;
 			}
 			
-
-			
 			// Once we have a list of all the trips connected to this stop...
 			stoptrips.then(function(stopTrips) {
 				// Get the list of all the trips
@@ -168,7 +202,7 @@ function stopCtrl($scope, Stop, StopTrip, mapRoute) {
 					where: JSON.stringify({
 						route_id: {"$in": trips}
 					})
-				}).then(function(stops) {				
+				}).then(function(stops) {
 					// Color these stops differently
 					for (var s in stops) {
 						var stop = stops[s];
