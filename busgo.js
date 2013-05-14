@@ -166,6 +166,9 @@ function stopCtrl($scope, Stop, StopTrip, mapRoute) {
 			});
 			// Move the map to the stop
 			$scope.map.panTo(stopLatlng);
+			// Update start of the trip
+			if (!$scope.start)
+				$scope.start = $scope.location.lat() + ", " + $scope.location.lng();
 			
 			// Get a list of trips this bus stop is on
 			var stoptrips = StopTrip.query({
