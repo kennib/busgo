@@ -81,7 +81,8 @@ function stopCtrl($scope, Stop, StopTrip, mapRoute) {
 	enableGestures($scope);
 	
 	// Update the directions from the Google directions service
-	var directions = new google.maps.DirectionsService();
+	var directions = new google.maps.DirectionsService(); 
+	var directionsDisplay = new google.maps.DirectionsRenderer({suppressMarkers: true});
 	var updateDirections = function() {
 		if ($scope.start && $scope.end) {
 			directions.route({
@@ -96,6 +97,9 @@ function stopCtrl($scope, Stop, StopTrip, mapRoute) {
 					var end = route.overview_path[route.overview_path.length-1];
 					$scope.startMarker.setPosition(start);
 					$scope.endMarker.setPosition(end);
+					// Show directions on the map
+					directionsDisplay.setMap($scope.map);
+					directionsDisplay.setDirections(result);
 				}
 			});
 		}
