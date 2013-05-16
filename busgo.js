@@ -30,6 +30,16 @@ for (var className in parseClasses) {
 	}();
 }
 
+app.value('colorList', [
+	"#0F808C",
+	"#6C8C26",
+	"#F2A71B",
+	"#F26A1B",
+	"#D91818",
+	"#691CF2",
+	"#44F29C",
+])
+
 // Map a route
 app.factory('mapRoute', function(Trip, Shape) {
 	return function(route_id, scope) {
@@ -65,7 +75,10 @@ app.factory('mapRoute', function(Trip, Shape) {
 });
 
 
-function stopCtrl($scope, Stop, StopTrip, Trip, Shape, mapRoute) {
+function stopCtrl($scope, Stop, StopTrip, Trip, Shape, colorList) {
+	// A list of colors for styling routes etc
+	$scope.colorList = colorList;
+	
 	// Bus stops accessible by id
 	$scope.stops = {};
 	
