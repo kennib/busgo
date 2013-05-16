@@ -200,7 +200,7 @@ function stopCtrl($scope, Stop, StopTrip, mapRoute) {
 			// Set these as the bus stops
 			$scope.stops = stops;
 			// Main stop is the closest stop
-			$scope.stopMain = stops[0];
+			$scope.setBusStop(stops[0]);
 		});
 	});
 	
