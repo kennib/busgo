@@ -108,6 +108,11 @@
               
               break;
           }
+          // Remove the overlay object when the directive is destroyed
+          scope.$on("$destroy", function() {
+            overlayObject.setMap(null);
+            overlayObject = null;
+          }); 
           
           // Bind map events to the object
           bindMapEvents(scope, events, overlayObject, elm);
