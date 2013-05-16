@@ -82,8 +82,8 @@
 
   /* 
    * Map overlay directives all work the same. Take map marker for example
-   * <ui-map-marker="myMarker"> will $watch 'myMarker' and each time it changes,
-   * it will hook up myMarker's events to the directive dom element.  Then
+   * <ui-map-marker="myMarkerData"> will $watch 'myMarkerData' and each time it changes,
+   * it will hook up the marker's events to the directive dom element.  Then
    * ui-event will be able to catch all of myMarker's events. Super simple.
    */
   function mapOverlayDirective(directiveName, events) {
@@ -91,13 +91,47 @@
       return {
         restrict: 'A',
         link: function (scope, elm, attrs) {
-          scope.$watch(attrs[directiveName], function (newObject) {
-            if (newObject) {
-              bindMapEvents(scope, events, newObject, elm);
+          // Create a new map overlay object
+          switch(directiveName) {
+            case 'uiMapMarker':
+              var overlayObject = new google.maps.Marker();
+              
+              // Watch for changes in position
+              var updatePosition = function() {
+                var lat = scope.$eval(attrs['uiLat']);
+                var lng = scope.$eval(attrs['uiLng']);
+                var pos = new google.maps.LatLng(lat, lng);
+                overlayObject.setPosition(pos);
+              };
+              scope.$watch(attrs['uiLat'], updatePosition);
+              scope.$watch(attrs['uiLng'], updatePosition);
+              
+              break;
+          }
+          
+          // Bind map events to the object
+          bindMapEvents(scope, events, overlayObject, elm);
+          
+          // Watch for a change in the map
+          scope.$watch(attrs['uiMapName'], function(newMap) {
+            overlayObject.setMap(newMap);
+          })
+          
+          // Watch for a change in the title
+          scope.$watch(attrs['uiTitle'], function(newTitle) {
+            overlayObject.setTitle(newTitle);
+          })
+          
+          // Watch for a change in the marker data
+          scope.$watch(attrs[directiveName], function (newData) {
+            if (newData) {
+              // Update the overlay object
+              overlayObject.setOptions(newData);
             }
           });
           
-          scope.$watch(attrs["color"], function (newColor) {
+          // Watch for color change
+          scope.$watch(attrs["uiColor"], function (newColor) {
             if (newColor) {
               if (directiveName == "uiMapMarker") {
                 var pinImage = new google.maps.MarkerImage("http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|" + newColor,
@@ -109,8 +143,8 @@
                   new google.maps.Point(0, 0),
                   new google.maps.Point(12, 35));
                 
-                scope.$eval(attrs[directiveName]).setIcon(pinImage);
-                scope.$eval(attrs[directiveName]).setShadow(pinShadow);
+                overlayObject.setIcon(pinImage);
+                overlayObject.setShadow(pinShadow);
               }
             }
           });
