@@ -42,13 +42,16 @@
 			<div ui-map-marker="" ui-map-name="map"
 				ui-lat="endPos.lat()" ui-lng="endPos.lng()"
 				ui-color=""></div>
+			
+			<div ng-repeat="trip in stopTrips" ui-map-polyline="" ui-map-name="map"
+				ui-path="trip"></div>
 		</div>
 		<div id="mapControls">
 			<h2>Map Controls</h2>
 			<h3>{{stop.stop_name}}</h3>
 			<p>Start <input ng-model="start"></input></p>
 			<p>End <input ng-model="end"></input></p>
-			{{stopsConnected}}
+			{{stopTrips}}
 		</div>
 	</body>
 </html>

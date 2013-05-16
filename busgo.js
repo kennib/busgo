@@ -65,7 +65,7 @@ app.factory('mapRoute', function(Trip, Shape) {
 });
 
 
-function stopCtrl($scope, Stop, StopTrip, mapRoute) {
+function stopCtrl($scope, Stop, StopTrip, Trip, Shape, mapRoute) {
 	// Bus stops accessible by id
 	$scope.stops = {};
 	
@@ -82,6 +82,8 @@ function stopCtrl($scope, Stop, StopTrip, mapRoute) {
 	};
 	// Marker settings for the main bus stop
 	$scope.stopMainMarker = {zIndex: 1000};
+	// The bus trips connected to the main stop
+	$scope.stopTrips = {};
 	// The bus stops connected to the main stop
 	$scope.stopsConnected = {};
 	
@@ -110,20 +112,61 @@ function stopCtrl($scope, Stop, StopTrip, mapRoute) {
 		var stoptrips = StopTrip.query({
 			where: JSON.stringify({
 				stop_id: stop.stop_id
-			})
+			}),
+			limit: 100
 		}).then(function(stopTrips) {
 			// Get the list of all the trip_ids
-			var trips = []
+			var trips = [];
 			for (var st in stopTrips) {
 				var stopTrip = stopTrips[st];
 				trips.push(stopTrip.route_id);
 			}
 			
+			// Get the trip data
+			Trip.query({
+				where: JSON.stringify({
+					trip_id: {"$in": trips}
+				}),
+				limit: 100
+			}).then(function(trips) {
+				// Get the list of all the shape_ids
+				var shapes = [];
+				for (var t in trips) {
+					var trip = trips[t];
+					shapes.push(trip.shape_id);
+				}
+				
+				// Get all the points in each shape
+				Shape.query({
+					where: JSON.stringify({
+						shape_id: {"$in": shapes}
+					}),
+					limit: 1000
+				}).then(function(points) {
+					// Get list of coords for each shape
+					var shapes = {};
+					for (var s in points) {
+						var point = points[s];
+						var shape = shapes[point.shape_id];
+						
+						if (shape == undefined)
+							shape = shapes[point.shape_id] = [];
+						
+						var latlng = new google.maps.LatLng(point.shape_pt_lat, point.shape_pt_lon);
+						shape[point.shape_pt_sequence] = latlng;
+					}
+					
+					// Set these shapes as the trips for the main bus stop
+					$scope.stopTrips = shapes;
+				});
+			});
+			
 			// Find all stops on these trips
 			StopTrip.query({
 				where: JSON.stringify({
 					route_id: {"$in": trips}
-				})
+				}),
+				limit: 100
 			}).then(function(stopTrips) {
 				var stops = []
 				for (var st in stopTrips) {
@@ -131,10 +174,12 @@ function stopCtrl($scope, Stop, StopTrip, mapRoute) {
 					stops.push(stopTrip.stop_id);
 				}
 				
+				// Get the stop data
 				Stop.query({
 					where: JSON.stringify({
 						stop_id: {"$in": stops}
-					})
+					}),
+					limit: 1000
 				}).then(function(stops) {
 					$scope.stopsConnected = stops;
 				});
@@ -203,6 +248,4 @@ function stopCtrl($scope, Stop, StopTrip, mapRoute) {
 			$scope.setBusStop(stops[0]);
 		});
 	});
-	
-	mapRoute("11954_X94", $scope);
 }

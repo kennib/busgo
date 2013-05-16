@@ -105,6 +105,21 @@
               };
               scope.$watch(attrs['uiLat'], updatePosition);
               scope.$watch(attrs['uiLng'], updatePosition);
+            
+              // Watch for a change in the title
+              scope.$watch(attrs['uiTitle'], function(newTitle) {
+                overlayObject.setTitle(newTitle);
+              });
+              
+              break;
+            
+            case 'uiMapPolyline':
+              var overlayObject = new google.maps.Polyline();
+              
+              // Watch for changes in path
+              scope.$watch(attrs['uiPath'], function(newPath) {
+                overlayObject.setPath(scope.$eval(attrs['uiPath']));
+              });
               
               break;
           }
@@ -120,14 +135,9 @@
           // Watch for a change in the map
           scope.$watch(attrs['uiMapName'], function(newMap) {
             overlayObject.setMap(newMap);
-          })
+          });
           
-          // Watch for a change in the title
-          scope.$watch(attrs['uiTitle'], function(newTitle) {
-            overlayObject.setTitle(newTitle);
-          })
-          
-          // Watch for a change in the marker data
+          // Watch for a change in the overlay data
           scope.$watch(attrs[directiveName], function (newData) {
             if (newData) {
               // Update the overlay object
