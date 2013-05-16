@@ -121,6 +121,11 @@
                 overlayObject.setPath(scope.$eval(attrs['uiPath']));
               });
               
+              // Watch for changes in stroke weight
+              scope.$watch(attrs['uiWeight'], function(newWeight) {
+                overlayObject.setOptions({strokeWeight: newWeight});
+              });
+              
               break;
           }
           // Remove the overlay object when the directive is destroyed
@@ -160,6 +165,8 @@
                 
                 overlayObject.setIcon(pinImage);
                 overlayObject.setShadow(pinShadow);
+              } else if (directiveName == "uiMapPolyline") {
+                overlayObject.setOptions({strokeColor: newColor});
               }
             }
           });
