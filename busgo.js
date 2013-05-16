@@ -160,30 +160,6 @@ function stopCtrl($scope, Stop, StopTrip, Trip, Shape, mapRoute) {
 					$scope.stopTrips = shapes;
 				});
 			});
-			
-			// Find all stops on these trips
-			StopTrip.query({
-				where: JSON.stringify({
-					route_id: {"$in": trips}
-				}),
-				limit: 100
-			}).then(function(stopTrips) {
-				var stops = []
-				for (var st in stopTrips) {
-					var stopTrip = stopTrips[st];
-					stops.push(stopTrip.stop_id);
-				}
-				
-				// Get the stop data
-				Stop.query({
-					where: JSON.stringify({
-						stop_id: {"$in": stops}
-					}),
-					limit: 1000
-				}).then(function(stops) {
-					$scope.stopsConnected = stops;
-				});
-			});
 		});
 	};
 	
