@@ -6,6 +6,7 @@ app.config(function($routeProvider) {
 	$routeProvider
 		.when('/map', {controller: mapCtrl, templateUrl: 'map.html'})
 		.when('/buses', {controller: busesCtrl, templateUrl: 'buses.html'})
+		.when('/buses/stop/:stopId', {controller: busesCtrl, templateUrl: 'buses.html'})
 		.when('/places', {controller: placesCtrl, templateUrl: 'places.html'})
 		.otherwise({redirectTo: '/map'});
 });
