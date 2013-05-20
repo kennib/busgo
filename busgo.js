@@ -8,7 +8,14 @@ app.config(function (ParseProvider) {
 	ParseProvider.initialize("XdeNxntxTKqBv0QvjsZfWdhKxmy74wMeqM4M42p5", "axK8ik0ppHi1smnjsQtTx04buL0M0FNKNKhb7vky");
 });
 app.run(function(Parse) {
-  return Parse.auth.resumeSession();
+	return Parse.auth.resumeSession();
+});
+
+// Create routes
+app.config(function($routeProvider) {
+	$routeProvider
+		.when('/map', {controller: mapCtrl, templateUrl: 'map.html'})
+		.otherwise({redirectTo: '/map'});
 });
 
 // Create Parse objects
@@ -75,7 +82,7 @@ app.factory('mapRoute', function(Trip, Shape) {
 });
 
 
-function stopCtrl($scope, Stop, StopTrip, Trip, Shape, colorList) {
+function mapCtrl($scope, Stop, StopTrip, Trip, Shape, colorList) {
 	// A list of colors for styling routes etc
 	$scope.colorList = colorList;
 	

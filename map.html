@@ -1,0 +1,33 @@
+<div id="mapDisplay" ui-map="map" ui-options="mapOptions">
+	<div ng-repeat="stop in stops" ui-map-marker="" ui-map-name="map"
+		ui-lat="stop.stop_lat" ui-lng="stop.stop_lon"
+		ui-title="stop.stop_name"
+		ui-event="{'map-click':'setBusStop(stop)'}"></div>
+	
+	<div ng-repeat="stop in stopsConnected" ui-map-marker="" ui-map-name="map"
+		ui-lat="stop.stop_lat" ui-lng="stop.stop_lon"
+		ui-title="stop.stop_name" ui-color="'00ffff'"
+		ui-event="{'map-click':'setBusStop(stop)'}"></div>
+	
+	<div ui-map-marker="stopMainMarker" ui-map-name="map"
+		ui-lat="stopMain.stop_lat" ui-lng="stopMain.stop_lon"
+		ui-title="'Current Bus Stop: ' + stopMain.stop_name"
+		ui-color="'ffff00'"></div>
+	
+	<div ui-map-marker="" ui-map-name="map"
+		ui-lat="startPos.lat()" ui-lng="startPos.lng()"
+		ui-color=""></div>
+	
+	<div ui-map-marker="" ui-map-name="map"
+		ui-lat="endPos.lat()" ui-lng="endPos.lng()"
+		ui-color=""></div>
+	
+	<div ng-repeat="trip in stopTrips" ui-map-polyline="" ui-map-name="map"
+		ui-path="trip" ui-color="colorList[$index%colorList.length]" ui-weight="4"></div>
+</div>
+<div id="mapControls">
+	<h2>Map Controls</h2>
+	<h3>{{stop.stop_name}}</h3>
+	<p>Start <input ng-model="start"></input></p>
+	<p>End <input ng-model="end"></input></p>
+</div>
