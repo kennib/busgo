@@ -1,0 +1,3 @@
+function busesCtrl($scope) {
+
+}
