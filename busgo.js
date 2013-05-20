@@ -5,6 +5,8 @@ app.config(function($routeProvider) {
 	// Create routes
 	$routeProvider
 		.when('/map', {controller: mapCtrl, templateUrl: 'map.html'})
+		.when('/buses', {controller: busesCtrl, templateUrl: 'buses.html'})
+		.when('/places', {controller: placesCtrl, templateUrl: 'places.html'})
 		.otherwise({redirectTo: '/map'});
 });
 
