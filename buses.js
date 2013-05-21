@@ -1,5 +1,5 @@
-function busesCtrl($scope, $routeParams,
-                   Stop) {
+function busesCtrl($scope, $routeParams, $http,
+                   Stop, Parse) {
 	// Get the stop
 	var stopId = $routeParams.stopId;
 	Stop.query({
@@ -12,5 +12,16 @@ function busesCtrl($scope, $routeParams,
 		} else {
 			$scope.stop = {name: "Invalid stop"};
 		}
+		
+		// Get the buses
+		var now = new Date();
+		var time = now.getHours() + ':' + now.getMinutes()  + ':' + now.getSeconds();
+		Parse.callFunction("busTimes", {
+				time: time,
+				stop: $scope.stop,
+				limit: 20
+		}).then(function(buses) {
+			$scope.buses = buses;
+		});
 	});
 }
