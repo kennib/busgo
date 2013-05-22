@@ -1,4 +1,4 @@
-function busesCtrl($scope, $routeParams, $http,
+function busesCtrl($scope, $routeParams, $timeout,
                    Stop, Parse) {
 	// Get the stop
 	var stopId = $routeParams.stopId;
@@ -31,7 +31,7 @@ function busesCtrl($scope, $routeParams, $http,
 		var time = new Date();
 		time.setDate(1); time.setMonth(0); time.setYear(1970);
 		$scope.now = time.getTime();
-		setTimeout(updateTime, 30000);
+		$timeout(updateTime, 30000);
 	}
 	updateTime();
 }
