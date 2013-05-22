@@ -50,4 +50,29 @@ app.value('colorList', [
 	"#D91818",
 	"#691CF2",
 	"#44F29C",
-])
+]);
+
+// Time difference filter
+app.filter('timeDiff', function() {
+	return function(input, offset) {
+		var time = new Date();
+		time.setTime(input - offset);
+		
+		var result = "";
+		var hours = time.getUTCHours();
+		var mins = time.getUTCMinutes();
+		if (hours) {
+			result += hours + " ";
+			result += (hours==1)? "hour":"hours";
+		}
+		if (mins) {
+			result += mins + " ";
+			result += (mins==1)? "minute":"minutes";
+		} else {
+			result = "<1 minute";
+		}
+		
+		return result;
+	};
+});
+
