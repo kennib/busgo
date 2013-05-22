@@ -61,7 +61,6 @@ app.factory('colorMap', function(colorList) {
 		map: {},
 		index: 0,
 		getColor: function(key) {
-			console.log(this.map[key]);
 			if (this.map[key] === undefined) {
 				var colorIndex = this.index%this.colors.length;
 				this.map[key] = this.colors[colorIndex];

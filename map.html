@@ -32,4 +32,7 @@
 	<h3>{{stopMain.stop_name}}</h3>
 	<p>Start <input ng-model="start"></input></p>
 	<p>End <input ng-model="end"></input></p>
+	<ul>
+		<li ng-repeat="trip in stopTrips | unique:'route'" style="background-color: {{routeColours.getColor(trip.route)}}">{{trip.route}}</li>
+	</ul>
 </div>
