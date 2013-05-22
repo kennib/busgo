@@ -55,12 +55,11 @@ app.value('colorList', [
 // Time difference filter
 app.filter('timeDiff', function() {
 	return function(input, offset) {
-		var time = new Date();
-		time.setTime(input - offset);
+		var time = input - offset;
+		var hours = Math.abs(parseInt(time/(1000*60*60)));
+		var mins = Math.abs(parseInt(time/(1000*60)) - hours*60);
 		
 		var result = "";
-		var hours = time.getUTCHours();
-		var mins = time.getUTCMinutes();
 		if (hours) {
 			result += hours + " ";
 			result += (hours==1)? "hour":"hours";
@@ -70,6 +69,10 @@ app.filter('timeDiff', function() {
 			result += (mins==1)? "minute":"minutes";
 		} else {
 			result = "<1 minute";
+		}
+		
+		if (time < 0) {
+			result += " ago";
 		}
 		
 		return result;
