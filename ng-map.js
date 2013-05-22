@@ -118,7 +118,9 @@
               
               // Watch for changes in path
               scope.$watch(attrs['uiPath'], function(newPath) {
-                overlayObject.setPath(scope.$eval(attrs['uiPath']));
+                var path = scope.$eval(attrs['uiPath']);
+                if (path != undefined)
+                  overlayObject.setPath(path);
               });
               
               // Watch for changes in stroke weight

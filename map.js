@@ -74,10 +74,21 @@ function mapCtrl($scope, $routeParams, $location,
 			}).then(function(trips) {
 				// Get the list of all the shape_ids
 				var shapes = [];
+				var shapeTrips = {};
+				var uniqueTrips = {};
 				for (var t in trips) {
 					var trip = trips[t];
+					var id = [trip.route_id, trip.service_id, trip.wheelchair_accessible, trip.direction_id].join('//');
+					uniqueTrips[id] = trip;
 					shapes.push(trip.shape_id);
+					
+					if (shapeTrips[trip.shape_id] === undefined)
+						shapeTrips[trip.shape_id] = [];
+					shapeTrips[trip.shape_id].push(trip);
 				}
+				
+				// Set these as the trips visible for this stop
+				$scope.stopTrips = uniqueTrips;
 				
 				// Get all the points in each shape
 				Shape.query({
@@ -88,8 +99,8 @@ function mapCtrl($scope, $routeParams, $location,
 				}).then(function(points) {
 					// Get list of coords for each shape
 					var shapes = {};
-					for (var s in points) {
-						var point = points[s];
+					for (var p in points) {
+						var point = points[p];
 						var shape = shapes[point.shape_id];
 						
 						if (shape == undefined)
@@ -99,8 +110,15 @@ function mapCtrl($scope, $routeParams, $location,
 						shape[point.shape_pt_sequence] = latlng;
 					}
 					
-					// Set these shapes as the trips for the main bus stop
-					$scope.stopTrips = shapes;
+					// Assign each shape to its trip
+					for (var shape_id in shapes) {
+						var shape = shapes[shape_id];
+						var trips = shapeTrips[shape_id];
+						for (var t in trips) {
+							var trip = trips[t];
+							trip.path = shape;
+						}
+					}
 				});
 			});
 		});
