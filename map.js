@@ -1,12 +1,12 @@
 function mapCtrl($scope, $routeParams, $location,
-                 Stop, StopTrip, Trip, Shape, colorList) {
+                 Stop, StopTrip, Trip, Shape, colorMap) {
 	// Page attributes
 	$scope.title = "Map";
 	$scope.leftLink = "buses";
 	$scope.rightLink = "places";
 	
 	// A list of colors for styling routes etc
-	$scope.colorList = colorList;
+	$scope.routeColours = colorMap;
 	
 	// Bus stops accessible by id
 	$scope.stops = {};
@@ -78,7 +78,8 @@ function mapCtrl($scope, $routeParams, $location,
 				var uniqueTrips = {};
 				for (var t in trips) {
 					var trip = trips[t];
-					var id = [trip.route_id, trip.service_id, trip.wheelchair_accessible, trip.direction_id].join('//');
+					trip.route = trip.route_id.split("_")[1];
+					var id = [trip.shape_id].join('//');
 					uniqueTrips[id] = trip;
 					shapes.push(trip.shape_id);
 					

@@ -25,7 +25,7 @@
 		ui-color=""></div>
 	
 	<div ng-repeat="trip in stopTrips" ui-map-polyline="" ui-map-name="map"
-		ui-path="trip.path" ui-color="colorList[$index%colorList.length]" ui-weight="4"></div>
+		ui-path="trip.path" ui-color="routeColours.getColor(trip.route)" ui-weight="4"></div>
 </div>
 <div id="mapControls">
 	<h2>Map Controls</h2>

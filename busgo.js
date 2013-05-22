@@ -50,7 +50,27 @@ app.value('colorList', [
 	"#D91818",
 	"#691CF2",
 	"#44F29C",
+	"#024959",
+	"#C3F2C0",
+	"#594153",
 ]);
+
+app.factory('colorMap', function(colorList) {
+	return {
+		colors: colorList,
+		map: {},
+		index: 0,
+		getColor: function(key) {
+			console.log(this.map[key]);
+			if (this.map[key] === undefined) {
+				var colorIndex = this.index%this.colors.length;
+				this.map[key] = this.colors[colorIndex];
+				this.index++;
+			}
+			return this.map[key];
+		}
+	};
+});
 
 // Time difference filter
 app.filter('timeDiff', function() {
