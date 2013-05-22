@@ -79,6 +79,21 @@ app.filter('timeDiff', function() {
 	};
 });
 
+// Filter unique elements
+app.filter('unique', function() {
+	return function(list, key) {
+		var items = {};
+		for (var i in list) {
+			var item = list[i];
+			if (key)
+				items[item[key]] = item;
+			else
+				item[item] = item;
+		}
+		return items;
+	};
+});
+
 // Header directive
 app.directive('busgoHeader', function() {
 	return {
