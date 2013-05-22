@@ -1,4 +1,6 @@
 <h1>Buses stopping at {{stop.stop_name}}</h1>
 <ol>
-	<li ng-repeat="bus in buses">{{bus}}</li>
+	<li ng-repeat="bus in buses">
+		{{(bus.arrival | timeDiff:now)}} {{bus.arrival | date:'shortTime'}} {{bus.trip.route}} {{bus.trip.trip_headsign}} {{timezoneOffset}}
+	</li>
 </ol>
