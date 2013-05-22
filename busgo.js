@@ -4,7 +4,7 @@ var app = angular.module('busgo', ['ui.map', 'ui.event', 'Parse'])
 app.config(function($routeProvider) {
 	// Create routes
 	$routeProvider
-		.when('/map', {controller: mapCtrl, templateUrl: 'map.html'})
+		.when('/map', {controller: mapCtrl, templateUrl: 'map.html', reloadOnSearch: false})
 		.when('/buses', {controller: busesCtrl, templateUrl: 'buses.html'})
 		.when('/buses/stop/:stopId', {controller: busesCtrl, templateUrl: 'buses.html'})
 		.when('/places', {controller: placesCtrl, templateUrl: 'places.html'})
