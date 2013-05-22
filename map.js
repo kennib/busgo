@@ -1,4 +1,5 @@
-function mapCtrl($scope, Stop, StopTrip, Trip, Shape, colorList) {
+function mapCtrl($scope, $routeParams, $location,
+                 Stop, StopTrip, Trip, Shape, colorList) {
 	// Page attributes
 	$scope.title = "Map";
 	$scope.leftLink = "buses";
@@ -14,13 +15,6 @@ function mapCtrl($scope, Stop, StopTrip, Trip, Shape, colorList) {
 	$scope.start = ""; $scope.startPos = {};
 	$scope.end = ""; $scope.endPos = {};
 	
-	// Default main bus stop
-	$scope.stopMain = {
-		stop_id: 200039,
-		stop_name: "Central Station, Eddy Av",
-		stop_lat: -33.88250732421875,
-		stop_lon: 151.2073974609375
-	};
 	// Marker settings for the main bus stop
 	$scope.stopMainMarker = {zIndex: 1000};
 	// The bus trips connected to the main stop
@@ -31,7 +25,6 @@ function mapCtrl($scope, Stop, StopTrip, Trip, Shape, colorList) {
 	// Options for the Google map
 	$scope.mapOptions = {
 		zoom: 15,
-		center: new google.maps.LatLng($scope.stopMain.stop_lat, $scope.stopMain.stop_lon),
 		mapTypeId: google.maps.MapTypeId.ROADMAP
 	};
 	
@@ -39,6 +32,12 @@ function mapCtrl($scope, Stop, StopTrip, Trip, Shape, colorList) {
 	enableGestures($scope);
 	
 	$scope.setBusStop = function(stop) {
+		// Update urls
+		$location.replace();
+		$location.search("stop", stop.stop_id);
+		$scope.leftLink = "buses/stop/"+stop.stop_id;
+		$scope.rightLink = "places/stop/"+stop.stop_id;
+		
 		// Set this as the main stop
 		$scope.stopMain = stop;
 		// Move the map to the stop
@@ -48,6 +47,9 @@ function mapCtrl($scope, Stop, StopTrip, Trip, Shape, colorList) {
 		// Update start of the trip
 		if (!$scope.start)
 			$scope.start = stop.stop_lat + ", " + stop.stop_lon;
+		
+		// Get the bus stops with 500m
+		closestStops(stop.stop_latlng.latitude, stop.stop_latlng.longitude, 0.5);
 		
 		// Get a list of trips this bus stop is on
 		var stoptrips = StopTrip.query({
@@ -142,27 +144,62 @@ function mapCtrl($scope, Stop, StopTrip, Trip, Shape, colorList) {
 	$scope.$watch("start", requestDirections);
 	$scope.$watch("end", requestDirections);
 	
-	// Get the user's location
-	navigator.geolocation.getCurrentPosition(function(position) {
-		$scope.location = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
-		
-		// Get the closest bus stops
+	// Get the closest bus stops
+	function closestStops(lat, lng, dist) {
 		Stop.query({
 			where: JSON.stringify({
 				stop_latlng: {
 					"$nearSphere": {
 						"__type": "GeoPoint",
-						"latitude": position.coords.latitude,
-						"longitude": position.coords.longitude
-					}
+						"latitude": lat,
+						"longitude": lng
+					},
+					"$maxDistanceInKilometers": dist
 				}
-			}),
-			limit: 10
+			})
 		}).then(function(stops) {
-			// Set these as the bus stops
-			$scope.stops = stops;
-			// Main stop is the closest stop
-			$scope.setBusStop(stops[0]);
+				// Set these as the bus stops
+				$scope.stops = stops;
 		});
-	});
+	}
+	
+	// Get the user's location
+	if ($routeParams.stop) {
+		// Use URL route parameter to find a stop
+		Stop.query({
+			where: JSON.stringify({
+				stop_id: $routeParams.stop
+			})
+		}).then(function(stops) {
+			if (stops.length > 0) {
+				// Set this as the main bus stop
+				var stop = stops[0];
+				$scope.setBusStop(stop);
+			}
+		});
+	} else {
+		// Use Geolocation
+		navigator.geolocation.getCurrentPosition(function(position) {
+			$scope.location = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+			// Get the closest bus stop
+			Stop.query({
+				where: JSON.stringify({
+					stop_latlng: {
+						"$nearSphere": {
+							"__type": "GeoPoint",
+							"latitude": $scope.location.lat(),
+							"longitude": $scope.location.lng()
+						}
+					}
+				}),
+				limit: 1
+			}).then(function(stops) {
+				if (stops.length > 0) {
+					// Set this as the main bus stop
+					var stop = stops[0];
+					$scope.setBusStop(stop);
+				}
+			});
+		});
+	}
 }
