@@ -1,4 +1,9 @@
 function mapCtrl($scope, Stop, StopTrip, Trip, Shape, colorList) {
+	// Page attributes
+	$scope.title = "Map";
+	$scope.leftLink = "buses";
+	$scope.rightLink = "places";
+	
 	// A list of colors for styling routes etc
 	$scope.colorList = colorList;
 	

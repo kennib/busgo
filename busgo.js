@@ -79,3 +79,15 @@ app.filter('timeDiff', function() {
 	};
 });
 
+// Header directive
+app.directive('busgoHeader', function() {
+	return {
+		templateUrl: 'header.html',
+		restrict: 'E',
+		replace: true,
+		link: function(scope, element, attrs) {
+			
+		}
+	}
+});
+
