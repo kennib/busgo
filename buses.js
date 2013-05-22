@@ -25,4 +25,13 @@ function busesCtrl($scope, $routeParams, $http,
 	}).then(function(buses) {
 		$scope.buses = buses;
 	});
+	
+	// Current time
+	function updateTime() {
+		var time = new Date();
+		time.setDate(1); time.setMonth(0); time.setYear(1970);
+		$scope.now = time.getTime();
+		setTimeout(updateTime, 30000);
+	}
+	updateTime();
 }
