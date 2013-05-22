@@ -12,16 +12,17 @@ function busesCtrl($scope, $routeParams, $http,
 		} else {
 			$scope.stop = {name: "Invalid stop"};
 		}
-		
-		// Get the buses
-		var now = new Date();
-		var time = now.getHours() + ':' + now.getMinutes()  + ':' + now.getSeconds();
-		Parse.callFunction("busTimes", {
-				time: time,
-				stop: $scope.stop,
-				limit: 20
-		}).then(function(buses) {
-			$scope.buses = buses;
-		});
+	});
+	
+	// Get the buses
+	var now = new Date();
+	now.setDate(1); now.setMonth(0); now.setYear(1970);  // Just the time part of the date
+	var time = now.getTime();
+	Parse.callFunction("busTimes", {
+			time: time,
+			stop_id: stopId,
+			limit: 20
+	}).then(function(buses) {
+		$scope.buses = buses;
 	});
 }
