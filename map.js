@@ -1,5 +1,5 @@
 function mapCtrl($scope, $routeParams, $location,
-                 Stop, StopTrip, Trip, Shape, colorMap) {
+                 Stop, StopTrip, Trip, Shape, colorMap, mapBounds) {
 	// Page attributes
 	$scope.title = "Map";
 	$scope.leftLink = "buses";
@@ -14,6 +14,7 @@ function mapCtrl($scope, $routeParams, $location,
 	// The start and end points of the destination
 	$scope.start = ""; $scope.startPos = {};
 	$scope.end = ""; $scope.endPos = {};
+	$scope.marker = {draggable: true};
 	
 	// Marker settings for the main bus stop
 	$scope.stopMainMarker = {zIndex: 1000};
@@ -148,20 +149,25 @@ function mapCtrl($scope, $routeParams, $location,
 		}
 	};
 	
-	// Request directions only if not requested again within the delay time
-	var directionsRequest;
-	requestDirections = function() {
-		var delay = 1500;
-		clearTimeout(directionsRequest);
-		directionsRequest = setTimeout(function() {
-			clearTimeout(directionsRequest);
-			updateDirections();
-		}, delay);
-	};
+	// Update directions when positions are changed
 	
-	// Update start and end of the trip
-	$scope.$watch("start", requestDirections);
-	$scope.$watch("end", requestDirections);
+	// Add autocomplete for trip start/end
+	var autocompleteOptions = {
+		bounds: mapBounds,
+		componentRestrictions: {country: "au"},
+	};
+	var startAutocomplete = new google.maps.places.Autocomplete(document.getElementById('start'), autocompleteOptions);
+	var endAutocomplete = new google.maps.places.Autocomplete(document.getElementById('end'), autocompleteOptions);
+	
+	// Watch for a change in start/end positions
+	google.maps.event.addListener(startAutocomplete, 'place_changed', function() {
+		var place = this.getPlace();
+		$scope.startPos = place.geometry.location;
+	});
+	google.maps.event.addListener(endAutocomplete, 'place_changed', function() {
+		var place = this.getPlace();
+		$scope.endPos = place.geometry.location;
+	});
 	
 	// Get the closest bus stops
 	function closestStops(lat, lng, dist) {
