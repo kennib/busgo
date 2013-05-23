@@ -10,7 +10,7 @@
 				<div>
 					<h2>{{place.name}}</h2>
 					<ul>
-						<li ng-repeat="type in place.types">{{type}}</li>
+						<li ng-repeat="type in place.types">{{type | prettify}}</li>
 					</ul>
 				</div>
 			</li>
@@ -22,10 +22,14 @@
 		<h2>Search</h2>
 		<form>
 			<p>
-				<label>Search Terms</label><input ng-model="search">
+				<label>Search Places</label><input ng-model="search">
 			</p>
 			<p>
 				<label>Search Radius</label><input ng-model="radius"><label>m</label>
+			</p>
+			<p>
+				<label>Place Types</label><br>
+				<select multiple ng-model="types" ng-options="type|prettify for type in validTypes"></select>
 			</p>
 		</form>
 	</div>
