@@ -5,8 +5,14 @@
 	<div id="placesDisplay">
 	</div>
 			<ol>
-			<li ng-repeat="place in places">
-				{{place}}
+			<li class="place" ng-repeat="place in places">
+				<img ng-src="{{place.icon}}">
+				<div>
+					<h2>{{place.name}}</h2>
+					<ul>
+						<li ng-repeat="type in place.types">{{type}}</li>
+					</ul>
+				</div>
 			</li>
 		</ol>
 </div>
