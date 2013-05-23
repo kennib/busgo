@@ -120,6 +120,20 @@ app.filter('unique', function() {
 	};
 });
 
+// Filter strings formatted_like_this so they are Formatted like this
+app.filter('prettify', function() {
+	return function(string) {
+		// Replace '_' with ' '
+		var out = string.replace(/_/g, ' ');
+		// Uppercase first letter
+		if (out.length > 0)
+			out = out[0].toUpperCase() + out.slice(1);
+		
+		return out;
+	};
+});
+
+
 // Header directive
 app.directive('busgoHeader', function() {
 	return {
