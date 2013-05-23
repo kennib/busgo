@@ -14,7 +14,7 @@ function mapCtrl($scope, $routeParams, $location,
 	// The start and end points of the destination
 	$scope.start = ""; $scope.startPos = {};
 	$scope.end = ""; $scope.endPos = {};
-	$scope.marker = {draggable: true};
+	$scope.marker = {draggable: true, zIndex: 1001};
 	
 	// Marker settings for the main bus stop
 	$scope.stopMainMarker = {zIndex: 1000};
@@ -130,17 +130,13 @@ function mapCtrl($scope, $routeParams, $location,
 	var directions = new google.maps.DirectionsService(); 
 	var directionsDisplay = new google.maps.DirectionsRenderer({suppressMarkers: true});
 	var updateDirections = function() {
-		if ($scope.start && $scope.end) {
+		if ($scope.startPos && $scope.endPos) {
 			directions.route({
-				origin: $scope.start + ", Sydney",
-				destination: $scope.end + ", Sydney",
+				origin: $scope.startPos,
+				destination: $scope.endPos,
 				travelMode: google.maps.TravelMode.TRANSIT
 			}, function(result, status) {
 				if (status == google.maps.DirectionsStatus.OK) {
-					// Update start and end positions
-					var route = result.routes[0];
-					$scope.startPos = route.overview_path[0];
-					$scope.endPos = route.overview_path[route.overview_path.length-1];
 					// Show directions on the map
 					directionsDisplay.setMap($scope.map);
 					directionsDisplay.setDirections(result);
@@ -163,11 +159,24 @@ function mapCtrl($scope, $routeParams, $location,
 	google.maps.event.addListener(startAutocomplete, 'place_changed', function() {
 		var place = this.getPlace();
 		$scope.startPos = place.geometry.location;
+		alignMap();
 	});
 	google.maps.event.addListener(endAutocomplete, 'place_changed', function() {
 		var place = this.getPlace();
 		$scope.endPos = place.geometry.location;
+		alignMap();
 	});
+	
+	// Align the map based on start/end locations
+	function alignMap() {
+		if ($scope.startPos && $scope.endPos) {
+			$scope.map.panToBounds(new google.maps.LatLngBounds($scope.startPos, $scope.endPos));
+		} else if ($scope.startPos) {
+			$scope.map.panTo($scope.startPos);
+		} else if ($scope.endPos) {
+			$scope.map.panTo($scope.endPos);
+		}
+	};
 	
 	// Get the closest bus stops
 	function closestStops(lat, lng, dist) {
@@ -200,12 +209,16 @@ function mapCtrl($scope, $routeParams, $location,
 				// Set this as the main bus stop
 				var stop = stops[0];
 				$scope.setBusStop(stop);
+				// Set this as the start location
+				$scope.startPos = new google.maps.LatLng(stop.stop_lat, stop.stop_lon);
 			}
 		});
 	} else {
 		// Use Geolocation
 		navigator.geolocation.getCurrentPosition(function(position) {
 			$scope.location = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+			$scope.startPos = $scope.location;
+			
 			// Get the closest bus stop
 			Stop.query({
 				where: JSON.stringify({
