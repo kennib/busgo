@@ -24,8 +24,8 @@ header > nav {
 }
 
 header > nav > * {
-	flex: 1;
-	-webkit-flex: 1;
+	flex: 1 1 auto;
+	-webkit-flex: 1 1 auto;
 	text-align: center;
 }
 
@@ -34,9 +34,18 @@ header > nav > * {
 }
 
 #mapControls {
+	display: flex;
+	display: -webkit-flex;
+	
 	width: 100%;
 	max-height: 25%;
+	
 	background: white;
+}
+
+#mapControls > div {
+	flex: 1 1 auto;
+	-webkit-flex: 1 1 auto;
 }
 
 #cursor {
