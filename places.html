@@ -2,14 +2,25 @@
 
 <div>
 	<h1>Places near {{locationName}}</h1>
-	
+	<div id="placesDisplay">
+	</div>
+			<ol>
+			<li ng-repeat="place in places">
+				{{place}}
+			</li>
+		</ol>
 </div>
 
 <aside>
 	<div>
 		<h2>Search</h2>
 		<form>
-			<input ng-model="search">
+			<p>
+				<label>Search Terms</label><input ng-model="search">
+			</p>
+			<p>
+				<label>Search Radius</label><input ng-model="radius"><label>m</label>
+			</p>
 		</form>
 	</div>
 </aside>
