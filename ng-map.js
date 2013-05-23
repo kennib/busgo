@@ -120,6 +120,15 @@
                 overlayObject.setTitle(newTitle);
               });
               
+              // Watch for change in icon url
+              scope.$watch(attrs['uiIcon'], function(newIcon) {
+                if (newIcon !== undefined) {
+                  var size = new google.maps.Size(15,17);
+                  var icon = { url: newIcon, scaledSize: size };
+                  overlayObject.setIcon(icon);
+                }
+              });
+              
               break;
             
             case 'uiMapPolyline':
