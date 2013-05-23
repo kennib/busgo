@@ -145,9 +145,6 @@ function mapCtrl($scope, $routeParams, $location,
 		}
 	};
 	
-	// Update directions when positions are changed
-	
-	
 	// Add autocomplete for trip start/end
 	var autocompleteOptions = {
 		bounds: mapBounds,
@@ -180,11 +177,14 @@ function mapCtrl($scope, $routeParams, $location,
 	};
 	
 	// Update start/end text on marker position change
+	// Update directions when positions are changed
 	$scope.$watch('startPos', function(newPos) {
+		updateDirections();
 		if (newPos !== undefined)
 			$scope.start = newPos.toString();
 	});
 	$scope.$watch('endPos', function(newPos) {
+		updateDirections();
 		if (newPos !== undefined)
 			$scope.end = newPos.toString();
 	});
