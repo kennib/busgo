@@ -82,7 +82,7 @@ aside > div > * {
 	width: 100%;
 }
 
-#mapControls {
+aside {
 	display: flex;
 	display: -webkit-flex;
 	
@@ -90,18 +90,18 @@ aside > div > * {
 	max-height: 25%;
 }
 
-#mapControls > div {
+aside > div {
 	flex: 1 1 auto;
 	-webkit-flex: 1 1 auto;
 }
 
-#mapControls form label {
+aside form label {
 	display: inline-block;
 	font-size: 1.1em;
 	min-width: 40px;
 }
 
-#mapControls form input {
+aside form input {
 	font-size: 1em;
 	width: 400px;
 	margin: 0px 4px;
