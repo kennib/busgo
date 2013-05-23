@@ -17,11 +17,11 @@
 		ui-color="'ffff00'"></div>
 	
 	<div ui-map-marker="marker" ui-map-name="map"
-		ui-lat="startPos.lat()" ui-lng="startPos.lng()"
+		ui-latlng="startPos"
 		ui-color="'ffffff'"></div>
 	
 	<div ui-map-marker="marker" ui-map-name="map"
-		ui-lat="endPos.lat()" ui-lng="endPos.lng()"
+		ui-latlng="endPos"
 		ui-color="'000000'"></div>
 	
 	<div ng-repeat="trip in stopTrips" ui-map-polyline="" ui-map-name="map"
