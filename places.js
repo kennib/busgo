@@ -1,4 +1,4 @@
-function placesCtrl($scope, $routeParams) {
+function placesCtrl($scope, $routeParams, $timeout) {
 	// Page attributes
 	$scope.title = "Places";
 	$scope.leftLink = "map";
@@ -42,27 +42,31 @@ function placesCtrl($scope, $routeParams) {
 	// Search for places near this location related to the search terms
 	var placesService = new google.maps.places.PlacesService(document.getElementById("placesDisplay"));
 	function placeSearch() {
+		// Function to update the list of places
+		function updatePlaces(results, PlacesServiceStatus) {
+			$scope.places = results;
+			$scope.$apply();
+		}
+		
+		// The searches
 		if ($scope.search) {
+			// If we have a search term
 			var search = {
 				query: $scope.search,
 				location: $scope.location,
 				radius: $scope.radius
 			};
 			
-			placesService.textSearch(search, function(results, PlacesServiceStatus) {
-				$scope.places = results;
-			});
+			placesService.textSearch(search, updatePlaces);
 		} else if ($scope.location) {
+			// If we only have a location
 			var search = {
 				keyword: "place",
 				location: $scope.location,
 				radius: $scope.radius
 			};
 			
-			placesService.radarSearch(search, function(results, PlacesServiceStatus) {
-				$scope.places = results;
-				$scope.$apply();
-			});
+			placesService.nearbySearch(search, updatePlaces);
 		}
 	}
 }
