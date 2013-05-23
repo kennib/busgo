@@ -44,9 +44,8 @@
 	</div>
 	<div>
 		<h2>Bus Stop - {{stopMain.stop_name}}</h2>
-		
 		<h3>Buses</h3>
-		<ul>
+		<ul id="busList">
 			<li ng-repeat="trip in stopTrips | unique:'route'" style="background-color: {{routeColours.getColor(trip.route)}}">{{trip.route}}</li>
 		</ul>
 	</div>
