@@ -16,13 +16,13 @@
 		ui-title="'Current Bus Stop: ' + stopMain.stop_name"
 		ui-color="'ffff00'"></div>
 	
-	<div ui-map-marker="" ui-map-name="map"
+	<div ui-map-marker="marker" ui-map-name="map"
 		ui-lat="startPos.lat()" ui-lng="startPos.lng()"
-		ui-color=""></div>
+		ui-color="'ffffff'"></div>
 	
-	<div ui-map-marker="" ui-map-name="map"
+	<div ui-map-marker="marker" ui-map-name="map"
 		ui-lat="endPos.lat()" ui-lng="endPos.lng()"
-		ui-color=""></div>
+		ui-color="'000000'"></div>
 	
 	<div ng-repeat="trip in stopTrips" ui-map-polyline="" ui-map-name="map"
 		ui-path="trip.path" ui-color="routeColours.getColor(trip.route)" ui-weight="4"></div>
@@ -30,8 +30,8 @@
 <div id="mapControls">
 	<h2>Map Controls</h2>
 	<h3>{{stopMain.stop_name}}</h3>
-	<p>Start <input ng-model="start"></input></p>
-	<p>End <input ng-model="end"></input></p>
+	<p>Start <input id="start" ng-model="start"></input></p>
+	<p>End <input id="end" ng-model="end"></input></p>
 	<ul>
 		<li ng-repeat="trip in stopTrips | unique:'route'" style="background-color: {{routeColours.getColor(trip.route)}}">{{trip.route}}</li>
 	</ul>

@@ -14,6 +14,12 @@ app.config(function($routeProvider) {
 // Enable maps API
 app.value('uiMapConfig', {});
 
+// Bounds for the map
+app.value('mapBounds', new google.maps.LatLngBounds(
+	new google.maps.LatLng(33.077734, 150.397339),
+	new google.maps.LatLng(-34.29353,151.622314)
+));
+
 // Enable Parse API
 app.config(function (ParseProvider) {
 	ParseProvider.initialize("XdeNxntxTKqBv0QvjsZfWdhKxmy74wMeqM4M42p5", "axK8ik0ppHi1smnjsQtTx04buL0M0FNKNKhb7vky");
