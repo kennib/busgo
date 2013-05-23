@@ -12,8 +12,8 @@ function mapCtrl($scope, $routeParams, $location,
 	$scope.stops = {};
 	
 	// The start and end points of the destination
-	$scope.start = ""; $scope.startPos = {};
-	$scope.end = ""; $scope.endPos = {};
+	$scope.start = ""; $scope.startPos = undefined;
+	$scope.end = ""; $scope.endPos = undefined;
 	$scope.marker = {draggable: true, zIndex: 1001};
 	
 	// Marker settings for the main bus stop
@@ -147,6 +147,7 @@ function mapCtrl($scope, $routeParams, $location,
 	
 	// Update directions when positions are changed
 	
+	
 	// Add autocomplete for trip start/end
 	var autocompleteOptions = {
 		bounds: mapBounds,
@@ -177,6 +178,16 @@ function mapCtrl($scope, $routeParams, $location,
 			$scope.map.panTo($scope.endPos);
 		}
 	};
+	
+	// Update start/end text on marker position change
+	$scope.$watch('startPos', function(newPos) {
+		if (newPos !== undefined)
+			$scope.start = newPos.toString();
+	});
+	$scope.$watch('endPos', function(newPos) {
+		if (newPos !== undefined)
+			$scope.end = newPos.toString();
+	});
 	
 	// Get the closest bus stops
 	function closestStops(lat, lng, dist) {

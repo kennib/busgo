@@ -98,13 +98,22 @@
               
               // Watch for changes in position
               var updatePosition = function() {
-                var lat = scope.$eval(attrs['uiLat']);
-                var lng = scope.$eval(attrs['uiLng']);
-                var pos = new google.maps.LatLng(lat, lng);
-                overlayObject.setPosition(pos);
+                var latlng = scope.$eval(attrs['uiLatlng']);
+                if (latlng == undefined) {
+                  var lat = scope.$eval(attrs['uiLat']);
+                  var lng = scope.$eval(attrs['uiLng']);
+                  var latlng = new google.maps.LatLng(lat, lng);
+                }
+                overlayObject.setPosition(latlng);
               };
               scope.$watch(attrs['uiLat'], updatePosition);
               scope.$watch(attrs['uiLng'], updatePosition);
+              scope.$watch(attrs['uiLatlng'], updatePosition);
+              
+              // Update position on marker drag
+              google.maps.event.addListener(overlayObject, 'dragend', function() {
+                scope[attrs['uiLatlng']] = overlayObject.getPosition();
+              });
             
               // Watch for a change in the title
               scope.$watch(attrs['uiTitle'], function(newTitle) {
