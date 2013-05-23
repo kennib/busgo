@@ -10,6 +10,8 @@ function mapCtrl($scope, $routeParams, $location,
 	
 	// Bus stops accessible by id
 	$scope.stops = {};
+	// Max distance away a stop can be (in metres)
+	$scope.stopDistance = 500;
 	
 	// The start and end points of the destination
 	$scope.start = ""; $scope.startPos = undefined;
@@ -49,9 +51,15 @@ function mapCtrl($scope, $routeParams, $location,
 		if (!$scope.start)
 			$scope.start = stop.stop_lat + ", " + stop.stop_lon;
 		
-		// Get the bus stops with 500m
-		closestStops(stop.stop_latlng.latitude, stop.stop_latlng.longitude, 0.5);
+		// Get the bus stops within a certain distance
+		closestStops(stop.stop_latlng.latitude, stop.stop_latlng.longitude, $scope.stopDistance);
 	};
+	
+	// Update the closest bus stops on change of distance
+	$scope.$watch('stopDistance', function() {
+		if ($scope.stopMain)
+			closestStops($scope.stopMain.stop_latlng.latitude, $scope.stopMain.stop_latlng.longitude, $scope.stopDistance);
+	});
 	
 	// Update the directions from the Google directions service
 	var directions = new google.maps.DirectionsService(); 
@@ -126,7 +134,7 @@ function mapCtrl($scope, $routeParams, $location,
 						"latitude": lat,
 						"longitude": lng
 					},
-					"$maxDistanceInKilometers": dist
+					"$maxDistanceInKilometers": dist/1000
 				}
 			})
 		}).then(function(stops) {

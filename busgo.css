@@ -94,18 +94,6 @@ aside > div > * {
 	-webkit-flex: 1 1 auto;
 }
 
-#mapControls form > p {
-	display: flex;
-	display: -webkit-flex;
-	align-items: center;
-	-webkit-align-items: center;
-}
-
-#mapControls form > p > * {
-	flex: 0 1 auto;
-	-webkit-flex: 0 1 auto;
-}
-
 #mapControls form label {
 	display: inline-block;
 	font-size: 1.1em;
@@ -115,6 +103,7 @@ aside > div > * {
 #mapControls form input {
 	font-size: 1em;
 	width: 400px;
+	margin: 0px 4px;
 }
 
 #mapControls #busList {
@@ -127,15 +116,8 @@ aside > div > * {
 	list-style-type: none;
 }
 
-#mapControls #busList > li {
-		flex: 0 1 auto;
-	-webkit-flex: 0 1 auto;
-	
-	width: auto;
-	margin: 2px;
-	padding: 4px;
-	
-	font-size: 1.2em;
+#mapControls #stopDistance {
+	width: 60px;
 }
 
 #cursor {
