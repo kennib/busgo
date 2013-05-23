@@ -184,6 +184,13 @@ function mapCtrl($scope, $routeParams, $location,
 					$scope.setBusStop(stop);
 				}
 			});
+		}, function() {
+			// Can't get user's location, assume Sydney
+			var sydney = new google.maps.LatLng(-33.883367,151.205946);
+			$scope.startPos = sydney;
+			$scope.map.panTo(sydney);
+			closestStops(sydney.lat(), sydney.lng(), $scope.stopDistance);
+			$scope.start = "Sydney";
 		});
 	}
 }
