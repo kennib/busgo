@@ -1,3 +1,7 @@
+body {
+	background-color: #EEE;
+}
+
 #busgo {
 	display: flex;
 	display: -webkit-flex;
@@ -15,18 +19,62 @@
 }
 
 header {
-	max-height: 10%;
+	max-height: 6%;
+}
+
+header a {
+	color: inherit;
+	text-decoration: none;
 }
 
 header > nav {
 	display: flex;
 	display: -webkit-flex;
+	align-items: center;
+	-webkit-align-items: center;
 }
 
 header > nav > * {
 	flex: 1 1 auto;
 	-webkit-flex: 1 1 auto;
+	
 	text-align: center;
+	color: #EEE;
+	background-color: #8FA340;
+}
+
+header #leftLink,
+header #rightlink {
+	color: white;
+	background-color: #627341;
+}
+
+header #leftLink:hover, 
+header #rightLink:hover {
+	background-color: BCD166;
+}
+
+aside > div {
+	margin: 4px;
+	
+	background-color: white;
+}
+aside {
+	background-color: #8FA340;
+}
+
+aside > div > h2 {
+	margin: 0px;
+	padding: 4px;
+	
+	color: white;
+	background-color: #627341;
+}
+
+aside > div > * {
+	margin: 6px;
+	
+	background-color: white;
 }
 
 #mapDisplay {
@@ -39,8 +87,6 @@ header > nav > * {
 	
 	width: 100%;
 	max-height: 25%;
-	
-	background: white;
 }
 
 #mapControls > div {
