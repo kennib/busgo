@@ -1,8 +1,8 @@
 function placesCtrl($scope, $routeParams, $timeout, Stop) {
 	// Page attributes
 	$scope.title = "Places";
-	$scope.leftLink = "map";
-	$scope.rightLink = "buses";
+	$scope.leftPage = $scope.leftLink = "map";
+	$scope.rightPage = $scope.rightLink = "buses";
 	
 	// Radius of search results in metres
 	$scope.radius = 1000;

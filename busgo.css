@@ -20,12 +20,6 @@ body {
 }
 
 header {
-	max-height: 6%;
-}
-
-header a {
-	color: inherit;
-	text-decoration: none;
 }
 
 header > nav {
@@ -36,12 +30,30 @@ header > nav {
 }
 
 header > nav > * {
-	flex: 1 1 auto;
-	-webkit-flex: 1 1 auto;
+	flex: 1 1;
+	-webkit-flex: 1 1;
 	
 	text-align: center;
 	color: #EEE;
 	background-color: #8FA340;
+}
+
+header a,
+header a {
+	color: inherit;
+	text-decoration: none;
+}
+
+header #leftLink img,
+header #rightlink img {
+	width: 40px;
+	height: 40px;
+	margin: 4px;
+}
+
+header #leftLink h2,
+header #rightlink h2 {
+	margin: 4px;
 }
 
 header #leftLink,
