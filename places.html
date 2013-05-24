@@ -1,24 +1,8 @@
 <busgo-header></busgo-header>
 
-<div>
-	<h1>Places near {{locationName}}</h1>
-	<div id="placesDisplay">
-	</div>
-		<ol>
-			<li class="place" ng-repeat="place in places">
-				<img ng-src="{{place.icon}}">
-				<div>
-					<h2>{{place.name}}</h2>
-					<ul>
-						<li ng-repeat="type in place.types">{{type | prettify}}</li>
-					</ul>
-				</div>
-			</li>
-		</ol>
-</div>
-
 <aside>
 	<div>
+		<h1>Places near {{locationName}}</h1>
 		<h2>Search</h2>
 		<form>
 			<p>
@@ -34,3 +18,19 @@
 		</form>
 	</div>
 </aside>
+
+<div>
+	<div id="placesDisplay">
+	</div>
+		<ol>
+			<li class="place" ng-repeat="place in places">
+				<img ng-src="{{place.icon}}">
+				<div>
+					<h2>{{place.name}}</h2>
+					<ul>
+						<li ng-repeat="type in place.types">{{type | prettify}}</li>
+					</ul>
+				</div>
+			</li>
+		</ol>
+</div>
