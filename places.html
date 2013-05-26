@@ -14,6 +14,7 @@
 			<p>
 				<label>Place Types</label><br>
 				<select multiple ng-model="types" ng-options="type|prettify for type in validTypes"></select>
+				<button ng-repeat="type in mainTypes" ng-click="setTypes(type)">{{type | prettify}}</button>
 			</p>
 		</form>
 	</div>
