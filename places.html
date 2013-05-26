@@ -28,9 +28,11 @@
 				<figure><img ng-src="{{place.icon}}"></figure>
 				<div>
 					<h2>{{place.name}}</h2>
-					<figure>
-						<p>{{place.duration.text}}</p>
-						<p>{{place.distance.text}}</p>
+					<button ng-click="getDirections(place)">Get Time/Distance</button>
+					<figure ng-repeat="mode in travelModes">
+						<p>{{place.dirs[mode].duration.text}}</p>
+						<p>{{place.dirs[mode].distance.text}}</p>
+						<p>{{mode}}</p>
 					</figure>
 					<ul>
 						<li ng-repeat="type in place.types">{{type | prettify}}</li>
