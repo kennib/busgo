@@ -13,7 +13,7 @@ function placesCtrl($scope, $routeParams, $timeout, Stop) {
 	
 	// Function to set types
 	$scope.setTypes = function() {
-		$scope.types = arguments;
+		$scope.types = Array.prototype.slice.call(arguments, 0);;
 	};
 	
 	
