@@ -127,7 +127,12 @@ aside form input {
 }
 
 .pageList > li {
-	height: 40px;
+	display: flex;
+	display: -webkit-flex;
+	-webkit-align-items: center;
+	align-items: center;
+	
+	background-color: white;
 }
 
 .pageList > li:nth-child(even) {
@@ -136,6 +141,19 @@ aside form input {
 
 .pageList > li:hover {
 	background-color: BCD166;
+}
+
+.pageList > li > figure {
+	margin: 5px;
+	text-align: center;
+}
+
+.pageList > li > figure > *{
+	display: block;
+}
+
+.pageList > li > figure > img {
+	height: 40px;
 }
 
 /**************************************

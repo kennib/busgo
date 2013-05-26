@@ -8,7 +8,8 @@
 	<h3>Current Time: {{now | date:'shortTime'}}</h3>
 	<ol class="pageList">
 		<li ng-repeat="bus in buses">
-			{{(bus.arrival | timeDiff:now)}} {{bus.arrival | date:'shortTime'}} {{bus.trip.route}} {{bus.trip.trip_headsign}} {{timezoneOffset}}
+			<figure><img ng-src="icons/buses.svg">{{bus.trip.route}}</figure>
+			{{(bus.arrival | timeDiff:now)}} {{bus.arrival | date:'shortTime'}} {{bus.trip.trip_headsign}} {{timezoneOffset}}
 		</li>
 	</ol>
 </div>
