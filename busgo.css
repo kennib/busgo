@@ -1,3 +1,7 @@
+/**************************************
+* Page Styling
+***************************************/
+
 body {
 	background-color: #EEE;
 	font-family: 'Nunito', sans-serif;
@@ -18,6 +22,10 @@ body {
 	flex: 0 1 auto;
 	-webkit-flex: 0 1 auto;
 }
+
+/**************************************
+* Headers/Footers/Controls Styling
+***************************************/
 
 header {
 }
@@ -62,7 +70,6 @@ header > nav img {
 	height: 40px;
 	margin: 4px;
 }
-
 
 aside {
 	display: flex;
@@ -111,6 +118,14 @@ aside form input {
 	margin: 0px 4px;
 }
 
+/**************************************
+* Component Styling
+***************************************/
+
+/**************************************
+* Map Page Styling
+***************************************/
+
 #busgo > #mapDisplay {
 	flex: 1 1 auto;
 	-webkit-flex: 1 1 auto;
@@ -147,6 +162,10 @@ a[href="http://zigfu.com/watermark"] {
 	display: none;
 }
 
+/**************************************
+* Places Page Styling
+***************************************/
+
 .place {
 	display: flex;
 	display: -webkit-flex;
@@ -157,3 +176,7 @@ a[href="http://zigfu.com/watermark"] {
 .place > img {
 	margin-right: 8px;
 }
+
+/**************************************
+* Buses Page Styling
+***************************************/
