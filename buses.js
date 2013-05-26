@@ -45,6 +45,8 @@ function busesCtrl($scope, $routeParams, $timeout, $route,
 			var bus = buses[b];
 			$scope.routes[bus.trip.route] = bus.trip.route;
 		}
+		// Select all routes
+		$scope.selectAllRoutes();
 	});
 	
 	// Current time
