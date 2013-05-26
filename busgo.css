@@ -1,3 +1,7 @@
+/**************************************
+* Page Styling
+***************************************/
+
 body {
 	background-color: #EEE;
 	font-family: 'Nunito', sans-serif;
@@ -19,6 +23,10 @@ body {
 	-webkit-flex: 0 1 auto;
 }
 
+/**************************************
+* Headers/Footers/Controls Styling
+***************************************/
+
 header {
 }
 
@@ -35,80 +43,74 @@ header > nav > * {
 	
 	text-align: center;
 	color: #EEE;
-	background-color: #8FA340;
+	background-color: #627341;
 }
 
-header a,
-header a {
+header > nav > a {
 	color: inherit;
 	text-decoration: none;
 }
 
-header #leftLink img,
-header #rightlink img {
+header > nav > a:hover {
+	background-color: BCD166;
+}
+
+header > nav > a.selected {
+	color: #EEE;
+	background-color: #8FA340;
+}
+
+header > nav h1 {
+	margin: 2px;
+}
+
+header > nav img,
+header > nav img {
 	width: 40px;
 	height: 40px;
 	margin: 4px;
 }
 
-header #leftLink h2,
-header #rightlink h2 {
-	margin: 4px;
-}
-
-header #leftLink,
-header #rightlink {
-	color: white;
-	background-color: #627341;
-}
-
-header #leftLink:hover, 
-header #rightLink:hover {
-	background-color: BCD166;
-}
-
-aside > div {
-	margin: 4px;
-	
-	background-color: white;
-}
 aside {
+	display: flex;
+	display: -webkit-flex;
+	flex-wrap: wrap;
+	-webkit-flex-wrap: wrap;
+	
+	width: 100%;
+	
 	background-color: #8FA340;
 }
 
-aside > div > h2 {
-	margin: 0px;
+aside h2 {
+	flex: 1 1 auto;
+	-webkit-flex: 1 1 auto;
+	
+	margin: 4px;
 	padding: 4px;
 	
 	color: white;
 	background-color: #627341;
 }
 
-aside > div > * {
-	margin: 6px;
+aside > div {
+	flex: 1 1 auto;
+	-webkit-flex: 1 1 auto;
+	
+	margin: 4px;
 	
 	background-color: white;
 }
 
-#mapDisplay {
-	flex: 1 1 auto;
-	-webkit-flex: 1 1 auto;
-	
-	width: 100%;
-	min-height: 60%;
+aside > div > * {
+	margin: 6px;
 }
 
-aside {
+aside form > p {
 	display: flex;
 	display: -webkit-flex;
-	
-	width: 100%;
-	min-height: 150px;
-}
-
-aside > div {
-	flex: 1 1 auto;
-	-webkit-flex: 1 1 auto;
+	align-items: center;
+	-webkit-align-items: center;
 }
 
 aside form label {
@@ -117,10 +119,82 @@ aside form label {
 	min-width: 40px;
 }
 
-aside form input {
+aside form input,
+aside form select {
 	font-size: 1em;
-	width: 400px;
-	margin: 0px 4px;
+	width: 70%;
+	margin: 0px 8px;
+}
+
+aside form button {
+	height: 40px;
+}
+
+/**************************************
+* Component Styling
+***************************************/
+
+button {
+	background-color: #627341;
+	border: none;
+	
+	color: #EEE;
+	font-family: inherit;
+}
+
+button:hover {
+	background-color: BCD166;
+}
+
+button.selected {
+	background-color: #8FA340;
+}
+
+.pageList {
+	width: 100%;
+	-webkit-padding-start: 0px;
+}
+
+.pageList > li {
+	display: flex;
+	display: -webkit-flex;
+	-webkit-align-items: center;
+	align-items: center;
+	
+	background-color: white;
+}
+
+.pageList > li:nth-child(even) {
+	background-color: #E0E0E0;
+}
+
+.pageList > li:hover {
+	background-color: BCD166;
+}
+
+.pageList > li > figure {
+	margin: 5px;
+	text-align: center;
+}
+
+.pageList > li > figure > *{
+	display: block;
+}
+
+.pageList > li > figure > img {
+	height: 40px;
+}
+
+/**************************************
+* Map Page Styling
+***************************************/
+
+#busgo > #mapDisplay {
+	flex: 1 1 auto;
+	-webkit-flex: 1 1 auto;
+	
+	width: 100%;
+	min-height: 60%;
 }
 
 #mapControls #busList {
@@ -137,6 +211,10 @@ aside form input {
 	width: 60px;
 }
 
+#mapControls .icon {
+	width: 30px;
+}
+
 #cursor {
 	position: fixed;
 	display: none;
@@ -151,6 +229,10 @@ a[href="http://zigfu.com/watermark"] {
 	display: none;
 }
 
+/**************************************
+* Places Page Styling
+***************************************/
+
 .place {
 	display: flex;
 	display: -webkit-flex;
@@ -161,3 +243,7 @@ a[href="http://zigfu.com/watermark"] {
 .place > img {
 	margin-right: 8px;
 }
+
+/**************************************
+* Buses Page Styling
+***************************************/

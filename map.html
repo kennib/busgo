@@ -1,4 +1,4 @@
-<busgo-header></busgo-header>
+<busgo-header selected="map"></busgo-header>
 
 <div id="mapDisplay" ui-map="map" ui-options="mapOptions">
 	<div ng-repeat="stop in stops" ui-map-marker="" ui-map-name="map"
@@ -13,11 +13,11 @@
 	
 	<div ui-map-marker="marker" ui-map-name="map"
 		ui-latlng="startPos"
-		ui-color="'ffffff'"></div>
+		ui-icon="startIcon" ui-icon-width="30" ui-icon-height="35"></div>
 	
 	<div ui-map-marker="marker" ui-map-name="map"
 		ui-latlng="endPos"
-		ui-color="'000000'"></div>
+		ui-icon="endIcon" ui-icon-width="30" ui-icon-height="35"></div>
 </div>
 
 <aside id="mapControls">
@@ -25,22 +25,14 @@
 		<h2>Plan A Trip</h2>
 		<form>
 			<p>
+				<img class="icon" ng-src="{{startIcon}}">
 				<label for="start">Start</label>
 				<input id="start" ng-model="start"></input>
 			</p>
 			<p>
+				<img class="icon" ng-src="{{endIcon}}">
 				<label for="end">End</label>
 				<input id="end" ng-model="end"></input>
-			</p>
-		</form>
-	</div>
-	<div>
-		<h2>Bus Stop - {{stopMain.stop_name}}</h2>
-		<form>
-			<p>
-				<label for="stopDistance">Show buses within</label>
-					<input id="stopDistance" ng-model="stopDistance"></input>
-				<label for="stopDistance">m</label>
 			</p>
 		</form>
 	</div>

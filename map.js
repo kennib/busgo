@@ -1,9 +1,9 @@
 function mapCtrl($scope, $routeParams, $location,
                  Stop, StopTrip, Trip, Shape, colorMap, mapBounds) {
 	// Page attributes
-	$scope.title = "Map";
-	$scope.leftPage = $scope.leftLink = "buses";
-	$scope.rightPage = $scope.rightLink = "places";
+	$scope.mapLink = "map";
+	$scope.busesLink = "buses";
+	$scope.placesLink = "places";
 	
 	// A list of colors for styling routes etc
 	$scope.routeColours = colorMap;
@@ -14,8 +14,8 @@ function mapCtrl($scope, $routeParams, $location,
 	$scope.stopDistance = 500;
 	
 	// The start and end points of the destination
-	$scope.start = ""; $scope.startPos = undefined;
-	$scope.end = ""; $scope.endPos = undefined;
+	$scope.start = ""; $scope.startPos = undefined; $scope.startIcon = "mapicons/start.png";
+	$scope.end = ""; $scope.endPos = undefined; $scope.endIcon = "mapicons/end.png";
 	$scope.marker = {draggable: true, zIndex: 1001};
 	
 	// Marker settings for the main bus stop
@@ -38,8 +38,8 @@ function mapCtrl($scope, $routeParams, $location,
 		// Update urls
 		$location.replace();
 		$location.search("stop", stop.stop_id);
-		$scope.leftLink = "buses/stop/"+stop.stop_id;
-		$scope.rightLink = "places/stop/"+stop.stop_id;
+		$scope.busesLink = "buses/stop/"+stop.stop_id;
+		$scope.placesLink = "places/stop/"+stop.stop_id;
 		
 		// Set this as the main stop
 		$scope.stopMain = stop;

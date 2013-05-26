@@ -1,16 +1,18 @@
 function busesCtrl($scope, $routeParams, $timeout, $route,
                    Stop, Parse) {
 	// Page attributes
-	$scope.title = "Buses";
-	$scope.leftPage = "pants";
-	$scope.leftPage = $scope.leftLink = "places";
-	$scope.rightPage = $scope.rightLink = "map";
+	$scope.busesLink = "buses";
+	$scope.placesLink = "places";
+	$scope.mapLink = "map";
 	
+	// List of routes at this location
+	$scope.routes = {};
+	$scope.selectedRoutes = [];
 	
 	if ($routeParams.stopId) {
 		// Update links
-		$scope.leftLink = "places/stop/"+$routeParams.stopId;
-		$scope.rightLink = "map?stop="+$routeParams.stopId;
+		$scope.placesLink = "places/stop/"+$routeParams.stopId;
+		$scope.mapLink = "map?stop="+$routeParams.stopId;
 	}
 	
 	// Get the stop
@@ -37,6 +39,12 @@ function busesCtrl($scope, $routeParams, $timeout, $route,
 			limit: 20
 	}).then(function(buses) {
 		$scope.buses = buses;
+		
+		// Get the routes the buses are on
+		for (var b in buses) {
+			var bus = buses[b];
+			$scope.routes[bus.trip.route] = bus.trip.route;
+		}
 	});
 	
 	// Current time
@@ -47,4 +55,12 @@ function busesCtrl($scope, $routeParams, $timeout, $route,
 		$timeout(updateTime, 30000);
 	}
 	updateTime();
+	
+	// Select all routes
+	$scope.selectAllRoutes = function() {
+		$scope.selectedRoute = [];
+		for (var route in $scope.routes) {
+			$scope.selectedRoutes.push(route);
+		}
+	};
 }

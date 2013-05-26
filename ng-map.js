@@ -123,7 +123,11 @@
               // Watch for change in icon url
               scope.$watch(attrs['uiIcon'], function(newIcon) {
                 if (newIcon !== undefined) {
-                  var size = new google.maps.Size(15,17);
+                  if (attrs['uiIconWidth'] && attrs['uiIconHeight'])
+                    var size = new google.maps.Size(attrs['uiIconWidth'], attrs['uiIconHeight']);
+                  else
+                    var size = new google.maps.Size(15,17);
+                  
                   var icon = { url: newIcon, scaledSize: size };
                   overlayObject.setIcon(icon);
                 }

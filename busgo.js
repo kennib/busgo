@@ -133,6 +133,32 @@ app.filter('prettify', function() {
 	};
 });
 
+// Filter that checks if item is in a list
+app.filter('in', function() {
+	return function(item, list) {
+		return list && list.indexOf(item) != -1;
+	};
+});
+
+// Filter that returns a given value if the input is true
+app.filter('true', function() {
+	return function(input, value) {
+		if (input)
+			return value;
+		else
+			return input;
+	};
+});
+
+// Filter that returns a given value if the input is false
+app.filter('false', function() {
+	return function(input, value) {
+		if (!input)
+			return value;
+		else
+			return input;
+	};
+});
 
 // Header directive
 app.directive('busgoHeader', function() {
@@ -141,7 +167,8 @@ app.directive('busgoHeader', function() {
 		restrict: 'E',
 		replace: true,
 		link: function(scope, element, attrs) {
-			
+			// Style selected element
+			document.getElementById(attrs["selected"]+"Tab").classList.add("selected");
 		}
 	}
 });
