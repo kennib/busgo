@@ -248,6 +248,42 @@ a[href="http://zigfu.com/watermark"] {
 	margin-right: 8px;
 }
 
+.place > div {
+	flex: 1 1 auto;
+	-webkit-flex: 1 1 auto;
+}
+
+.place .header {
+	display: flex;
+	display: -webkit-flex;
+	align-items: center;
+	-webkit-align-items: center;
+	justify-content: flex-end;
+	-webkit-justify-content: flex-end;
+}
+
+.place .header h2 {
+	flex: 1 1 auto;
+	-webkit-flex: 1 1 auto;
+	
+	margin: 5px;
+}
+
+.place button {
+	flex: 0 0 auto;
+	-webkit-flex: 0 0 auto;
+	min-height: 30px;
+}
+
+.place > div > figure {
+	display: inline-block;
+	
+	width: 120px;
+	margin: 10px;
+	
+	text-align: center;
+}
+
 /**************************************
 * Buses Page Styling
 ***************************************/

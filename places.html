@@ -27,16 +27,16 @@
 			<li class="place" ng-repeat="place in places">
 				<figure><img ng-src="{{place.icon}}"></figure>
 				<div>
-					<h2>{{place.name}}</h2>
-					<button ng-click="getDirections(place)">Get Time/Distance</button>
-					<figure ng-repeat="mode in travelModes">
+					<div class="header">
+						<h2>{{place.name}}</h2>
+						<button ng-click="getDirections(place)">Get Time/Distance</button>
+					</div>
+					<figure ng-repeat="mode in travelModes" ng-show="place.hasDirections">
+						<p>{{mode}}</p>
+						<img ng-src="icons/{{mode}}.svg">
 						<p>{{place.dirs[mode].duration.text}}</p>
 						<p>{{place.dirs[mode].distance.text}}</p>
-						<p>{{mode}}</p>
 					</figure>
-					<ul>
-						<li ng-repeat="type in place.types">{{type | prettify}}</li>
-					</ul>
 				</div>
 			</li>
 		</ol>

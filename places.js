@@ -116,6 +116,7 @@ function placesCtrl($scope, $routeParams, $timeout, Stop) {
 							place.dirs[mode].duration = leg.duration;
 						}
 					}
+					place.hasDirections = true;
 					$scope.$apply();
 				}
 			});
