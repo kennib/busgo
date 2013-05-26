@@ -106,6 +106,13 @@ aside > div > * {
 	margin: 6px;
 }
 
+aside form > p {
+	display: flex;
+	display: -webkit-flex;
+	align-items: center;
+	-webkit-align-items: center;
+}
+
 aside form label {
 	display: inline-block;
 	font-size: 1.1em;
@@ -220,6 +227,14 @@ a[href="http://zigfu.com/watermark"] {
 /**************************************
 * Places Page Styling
 ***************************************/
+
+#typeSelect {
+	width: 70%;
+}
+
+.typeButton {
+	height: 40px;
+}
 
 .place {
 	display: flex;

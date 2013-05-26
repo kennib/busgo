@@ -13,8 +13,8 @@
 			</p>
 			<p ng-switch on="types">
 				<label>Place Types</label><br>
-				<select multiple ng-model="types" ng-options="type|prettify for type in validTypes"></select>
-				<button ng-repeat="type in mainTypes" ng-click="setTypes(type)" class="{{ type|in:types |true:'selected'|false:'' }}">{{type | prettify}}</button>
+				<select id="typeSelect" multiple ng-model="types" ng-options="type|prettify for type in validTypes"></select>
+				<button class="typeButton" ng-repeat="type in mainTypes" ng-click="setTypes(type)" class="{{ type|in:types |true:'selected'|false:'' }}">{{type | prettify}}</button>
 			</p>
 		</form>
 	</div>
