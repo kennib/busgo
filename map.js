@@ -14,8 +14,8 @@ function mapCtrl($scope, $routeParams, $location,
 	$scope.stopDistance = 500;
 	
 	// The start and end points of the destination
-	$scope.start = ""; $scope.startPos = undefined;
-	$scope.end = ""; $scope.endPos = undefined;
+	$scope.start = ""; $scope.startPos = undefined; $scope.startIcon = "mapicons/start.png";
+	$scope.end = ""; $scope.endPos = undefined; $scope.endIcon = "mapicons/end.png";
 	$scope.marker = {draggable: true, zIndex: 1001};
 	
 	// Marker settings for the main bus stop

@@ -183,6 +183,10 @@ aside form input {
 	width: 60px;
 }
 
+#mapControls .icon {
+	width: 30px;
+}
+
 #cursor {
 	position: fixed;
 	display: none;
