@@ -122,6 +122,22 @@ aside form input {
 * Component Styling
 ***************************************/
 
+button {
+	background-color: #627341;
+	border: none;
+	
+	color: #EEE;
+	font-family: inherit;
+}
+
+button:hover {
+	background-color: BCD166;
+}
+
+button.selected {
+	background-color: #8FA340;
+}
+
 .pageList {
 	width: 100%;
 	-webkit-padding-start: 0px;
