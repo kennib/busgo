@@ -141,7 +141,8 @@ app.directive('busgoHeader', function() {
 		restrict: 'E',
 		replace: true,
 		link: function(scope, element, attrs) {
-			
+			// Style selected element
+			document.getElementById(attrs["selected"]+"Tab").classList.add("selected");
 		}
 	}
 });

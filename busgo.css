@@ -35,37 +35,35 @@ header > nav > * {
 	
 	text-align: center;
 	color: #EEE;
-	background-color: #8FA340;
+	background-color: #627341;
 }
 
-header a,
-header a {
+header > nav > a {
 	color: inherit;
 	text-decoration: none;
 }
 
-header #leftLink img,
-header #rightlink img {
+header > nav > a:hover {
+	background-color: BCD166;
+}
+
+header > nav > a.selected {
+	color: #EEE;
+	background-color: #8FA340;
+}
+
+header > nav h1 {
+	margin: 2px;
+}
+
+header > nav img,
+header > nav img {
 	width: 40px;
 	height: 40px;
 	margin: 4px;
 }
 
-header #leftLink h2,
-header #rightlink h2 {
-	margin: 4px;
-}
 
-header #leftLink,
-header #rightlink {
-	color: white;
-	background-color: #627341;
-}
-
-header #leftLink:hover, 
-header #rightLink:hover {
-	background-color: BCD166;
-}
 
 aside > div {
 	margin: 4px;
