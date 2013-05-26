@@ -1,8 +1,9 @@
 function mapCtrl($scope, $routeParams, $location,
                  Stop, StopTrip, Trip, Shape, colorMap, mapBounds) {
 	// Page attributes
-	$scope.leftLink = "buses";
-	$scope.rightLink = "places";
+	$scope.mapLink = "map";
+	$scope.busesLink = "buses";
+	$scope.placesLink = "places";
 	
 	// A list of colors for styling routes etc
 	$scope.routeColours = colorMap;
@@ -37,8 +38,8 @@ function mapCtrl($scope, $routeParams, $location,
 		// Update urls
 		$location.replace();
 		$location.search("stop", stop.stop_id);
-		$scope.leftLink = "buses/stop/"+stop.stop_id;
-		$scope.rightLink = "places/stop/"+stop.stop_id;
+		$scope.busesLink = "buses/stop/"+stop.stop_id;
+		$scope.placesLink = "places/stop/"+stop.stop_id;
 		
 		// Set this as the main stop
 		$scope.stopMain = stop;

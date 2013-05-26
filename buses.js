@@ -1,14 +1,15 @@
 function busesCtrl($scope, $routeParams, $timeout, $route,
                    Stop, Parse) {
 	// Page attributes
-	$scope.leftLink = "places";
-	$scope.rightLink = "map";
+	$scope.busesLink = "buses";
+	$scope.placesLink = "places";
+	$scope.mapLink = "map";
 	
 	
 	if ($routeParams.stopId) {
 		// Update links
-		$scope.leftLink = "places/stop/"+$routeParams.stopId;
-		$scope.rightLink = "map?stop="+$routeParams.stopId;
+		$scope.placesLink = "places/stop/"+$routeParams.stopId;
+		$scope.mapLink = "map?stop="+$routeParams.stopId;
 	}
 	
 	// Get the stop

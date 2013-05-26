@@ -1,7 +1,8 @@
 function placesCtrl($scope, $routeParams, $timeout, Stop) {
 	// Page attributes
-	$scope.leftLink = "map";
-	$scope.rightLink = "buses";
+	$scope.placesLink = "places";
+	$scope.mapLink = "map";
+	$scope.busesLink = "buses";
 	
 	// Radius of search results in metres
 	$scope.radius = 1000;
@@ -12,8 +13,8 @@ function placesCtrl($scope, $routeParams, $timeout, Stop) {
 	// Get the user's location
 	if ($routeParams.stopId) {
 		// Update links
-		$scope.leftLink = "map?stop="+$routeParams.stopId;
-		$scope.rightLink = "buses/stop/"+$routeParams.stopId;
+		$scope.mapLink = "map?stop="+$routeParams.stopId;
+		$scope.busesLink = "buses/stop/"+$routeParams.stopId;
 		
 		// Use URL route parameter to find a stop
 		Stop.query({
