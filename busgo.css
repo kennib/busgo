@@ -64,14 +64,25 @@ header > nav img {
 }
 
 
+aside {
+	display: flex;
+	display: -webkit-flex;
+	flex-wrap: wrap;
+	-webkit-flex-wrap: wrap;
+	
+	width: 100%;
+	min-height: 150px;
+	
+	background-color: #8FA340;
+}
 
 aside > div {
+	flex: 1 1 auto;
+	-webkit-flex: 1 1 auto;
+	
 	margin: 4px;
 	
 	background-color: white;
-}
-aside {
-	background-color: #8FA340;
 }
 
 aside > div > h2 {
@@ -88,27 +99,6 @@ aside > div > * {
 	background-color: white;
 }
 
-#mapDisplay {
-	flex: 1 1 auto;
-	-webkit-flex: 1 1 auto;
-	
-	width: 100%;
-	min-height: 60%;
-}
-
-aside {
-	display: flex;
-	display: -webkit-flex;
-	
-	width: 100%;
-	min-height: 150px;
-}
-
-aside > div {
-	flex: 1 1 auto;
-	-webkit-flex: 1 1 auto;
-}
-
 aside form label {
 	display: inline-block;
 	font-size: 1.1em;
@@ -119,6 +109,14 @@ aside form input {
 	font-size: 1em;
 	width: 400px;
 	margin: 0px 4px;
+}
+
+#mapDisplay {
+	flex: 1 1 auto;
+	-webkit-flex: 1 1 auto;
+	
+	width: 100%;
+	min-height: 60%;
 }
 
 #mapControls #busList {
