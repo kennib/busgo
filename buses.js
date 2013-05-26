@@ -1,10 +1,8 @@
 function busesCtrl($scope, $routeParams, $timeout, $route,
                    Stop, Parse) {
 	// Page attributes
-	$scope.title = "Buses";
-	$scope.leftPage = "pants";
-	$scope.leftPage = $scope.leftLink = "places";
-	$scope.rightPage = $scope.rightLink = "map";
+	$scope.leftLink = "places";
+	$scope.rightLink = "map";
 	
 	
 	if ($routeParams.stopId) {

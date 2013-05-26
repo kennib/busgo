@@ -1,9 +1,8 @@
 function mapCtrl($scope, $routeParams, $location,
                  Stop, StopTrip, Trip, Shape, colorMap, mapBounds) {
 	// Page attributes
-	$scope.title = "Map";
-	$scope.leftPage = $scope.leftLink = "buses";
-	$scope.rightPage = $scope.rightLink = "places";
+	$scope.leftLink = "buses";
+	$scope.rightLink = "places";
 	
 	// A list of colors for styling routes etc
 	$scope.routeColours = colorMap;
