@@ -6,7 +6,7 @@
 
 <div>
 	<h3>Current Time: {{now | date:'shortTime'}}</h3>
-	<ol>
+	<ol class="pageList">
 		<li ng-repeat="bus in buses">
 			{{(bus.arrival | timeDiff:now)}} {{bus.arrival | date:'shortTime'}} {{bus.trip.route}} {{bus.trip.trip_headsign}} {{timezoneOffset}}
 		</li>

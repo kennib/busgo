@@ -122,6 +122,22 @@ aside form input {
 * Component Styling
 ***************************************/
 
+.pageList {
+	width: 100%;
+}
+
+.pageList > li {
+	height: 40px;
+}
+
+.pageList > li:nth-child(even) {
+	background-color: #E0E0E0;
+}
+
+.pageList > li:hover {
+	background-color: BCD166;
+}
+
 /**************************************
 * Map Page Styling
 ***************************************/
