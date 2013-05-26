@@ -5,6 +5,9 @@ function busesCtrl($scope, $routeParams, $timeout, $route,
 	$scope.placesLink = "places";
 	$scope.mapLink = "map";
 	
+	// List of routes at this location
+	$scope.routes = {};
+	$scope.selectedRoutes = [];
 	
 	if ($routeParams.stopId) {
 		// Update links
@@ -36,6 +39,14 @@ function busesCtrl($scope, $routeParams, $timeout, $route,
 			limit: 20
 	}).then(function(buses) {
 		$scope.buses = buses;
+		
+		// Get the routes the buses are on
+		for (var b in buses) {
+			var bus = buses[b];
+			$scope.routes[bus.trip.route] = bus.trip.route;
+			// Select all routes
+			$scope.selectedRoutes.push(bus.trip.route);
+		}
 	});
 	
 	// Current time

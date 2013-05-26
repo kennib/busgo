@@ -119,10 +119,11 @@ aside form label {
 	min-width: 40px;
 }
 
-aside form input {
+aside form input,
+aside form select {
 	font-size: 1em;
-	width: 400px;
-	margin: 0px 4px;
+	width: 70%;
+	margin: 0px 8px;
 }
 
 /**************************************
