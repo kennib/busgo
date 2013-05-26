@@ -60,6 +60,10 @@ function placesCtrl($scope, $routeParams, $timeout, Stop) {
 		// Function to update the list of places
 		function updatePlaces(results, PlacesServiceStatus) {
 			$scope.places = results;
+			// Get directions for each place
+			for (var place in $scope.places) {
+				getDirections(place);
+			}
 			$scope.$apply();
 		}
 		
@@ -85,4 +89,30 @@ function placesCtrl($scope, $routeParams, $timeout, Stop) {
 			placesService.nearbySearch(search, updatePlaces);
 		}
 	}
+	
+	// Get the directions from the Google directions service
+	var directions = new google.maps.DirectionsService(); 
+	var directionsDisplay = new google.maps.DirectionsRenderer({suppressMarkers: true});
+	var getDirections = function(place) {
+		directions.route({
+			origin: $scope.location,
+			destination: $scope.places[place].geometry.location,
+			travelMode: google.maps.TravelMode.TRANSIT
+		}, function(result, status) {
+			place = $scope.places[place];
+			if (status == google.maps.DirectionsStatus.OK) {
+				place.dirs = result;
+				if (result.routes.length > 0) {
+					var route = result.routes[0];
+					if (route.legs.length > 0) {
+						var leg = route.legs[0];
+						
+						place.distance = leg.distance;
+						place.duration = leg.duration;
+					}
+				}
+				$scope.$apply();
+			}
+		});
+	};
 }
