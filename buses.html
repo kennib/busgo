@@ -1,9 +1,14 @@
 <busgo-header  selected="buses"></busgo-header>
 
-<h1>Buses stopping at {{stop.stop_name}}</h1>
-<h2>Current Time: {{now | date:'shortTime'}}</h2>
-<ol>
-	<li ng-repeat="bus in buses">
-		{{(bus.arrival | timeDiff:now)}} {{bus.arrival | date:'shortTime'}} {{bus.trip.route}} {{bus.trip.trip_headsign}} {{timezoneOffset}}
-	</li>
-</ol>
+<aside>
+	<h2>Buses Stop - {{stop.stop_name}}</h2>
+</aside>
+
+<div>
+	<h3>Current Time: {{now | date:'shortTime'}}</h3>
+	<ol>
+		<li ng-repeat="bus in buses">
+			{{(bus.arrival | timeDiff:now)}} {{bus.arrival | date:'shortTime'}} {{bus.trip.route}} {{bus.trip.trip_headsign}} {{timezoneOffset}}
+		</li>
+	</ol>
+</div>

@@ -71,9 +71,19 @@ aside {
 	-webkit-flex-wrap: wrap;
 	
 	width: 100%;
-	min-height: 150px;
 	
 	background-color: #8FA340;
+}
+
+aside h2 {
+	flex: 1 1 auto;
+	-webkit-flex: 1 1 auto;
+	
+	margin: 4px;
+	padding: 4px;
+	
+	color: white;
+	background-color: #627341;
 }
 
 aside > div {
@@ -85,18 +95,8 @@ aside > div {
 	background-color: white;
 }
 
-aside > div > h2 {
-	margin: 0px;
-	padding: 4px;
-	
-	color: white;
-	background-color: #627341;
-}
-
 aside > div > * {
 	margin: 6px;
-	
-	background-color: white;
 }
 
 aside form label {
