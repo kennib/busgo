@@ -44,8 +44,6 @@ function busesCtrl($scope, $routeParams, $timeout, $route,
 		for (var b in buses) {
 			var bus = buses[b];
 			$scope.routes[bus.trip.route] = bus.trip.route;
-			// Select all routes
-			$scope.selectedRoutes.push(bus.trip.route);
 		}
 	});
 	
@@ -57,4 +55,12 @@ function busesCtrl($scope, $routeParams, $timeout, $route,
 		$timeout(updateTime, 30000);
 	}
 	updateTime();
+	
+	// Select all routes
+	$scope.selectAllRoutes = function() {
+		$scope.selectedRoute = [];
+		for (var route in $scope.routes) {
+			$scope.selectedRoutes.push(route);
+		}
+	};
 }

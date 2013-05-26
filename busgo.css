@@ -126,6 +126,10 @@ aside form select {
 	margin: 0px 8px;
 }
 
+aside form button {
+	height: 40px;
+}
+
 /**************************************
 * Component Styling
 ***************************************/
@@ -228,14 +232,6 @@ a[href="http://zigfu.com/watermark"] {
 /**************************************
 * Places Page Styling
 ***************************************/
-
-#typeSelect {
-	width: 70%;
-}
-
-.typeButton {
-	height: 40px;
-}
 
 .place {
 	display: flex;

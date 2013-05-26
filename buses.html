@@ -7,6 +7,7 @@
 			<p>
 				<label>Routes</label>
 				<select multiple ng-model="selectedRoutes" ng-options="route for (route,route) in routes"></select>
+				<button ng-click="selectAllRoutes()">Select All</button>
 			</p>
 		</form>
 	</div>
