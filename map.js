@@ -117,13 +117,9 @@ function mapCtrl($scope, $routeParams, $location,
 	// Update directions when positions are changed
 	$scope.$watch('startPos', function(newPos) {
 		updateDirections();
-		if (newPos !== undefined)
-			$scope.start = newPos.toString();
 	});
 	$scope.$watch('endPos', function(newPos) {
 		updateDirections();
-		if (newPos !== undefined)
-			$scope.end = newPos.toString();
 	});
 	
 	// Get the closest bus stops
@@ -160,6 +156,7 @@ function mapCtrl($scope, $routeParams, $location,
 				$scope.setBusStop(stop);
 				// Set this as the start location
 				$scope.startPos = new google.maps.LatLng(stop.stop_lat, stop.stop_lon);
+				$scope.start = "Bus Stop at " + stop.stop_name;
 			}
 		});
 	} else {
@@ -167,6 +164,7 @@ function mapCtrl($scope, $routeParams, $location,
 		navigator.geolocation.getCurrentPosition(function(position) {
 			$scope.location = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
 			$scope.startPos = $scope.location;
+			$scope.start = "My Location";
 			
 			// Get the closest bus stop
 			Stop.query({
