@@ -31,7 +31,7 @@
 						<h2>{{place.name}}</h2>
 						<button ng-click="getDirections(place)">Get Time/Distance</button>
 					</div>
-					<figure ng-repeat="mode in travelModes" ng-show="place.hasDirections">
+					<figure ng-repeat="mode in travelModes" ng-show="place.hasDirections" ng-click="map(place)">
 						<p>{{mode}}</p>
 						<img ng-src="icons/{{mode}}.svg">
 						<p>{{place.dirs[mode].firstRoute().duration.text}}</p>

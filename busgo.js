@@ -207,3 +207,44 @@ app.factory('directions', function($timeout) {
 	};
 });
 
+// Transform URL parameters into data
+app.factory('busgoParams', function($routeParams) {
+	return function() {
+		var data = {};
+		angular.copy($routeParams, data);
+		if (data.endLat && data.endLng) {
+			data.end = new google.maps.LatLng(data.endLat, data.endLng);
+		}
+		return data;
+	};
+});
+
+// Move between pages transferring data
+app.factory('busgoLocation', function($location) {
+	return function(page, data) {
+		// Transform the data
+		var urlData = [];
+		for (var key in data) {
+			var datum = data[key];
+			switch(key) {
+				case "endPlace":
+					urlData.endName = datum.name;
+					urlData.endLat = datum.geometry.location.lat();
+					urlData.endLng = datum.geometry.location.lng();
+			}
+		}
+		
+		// Turn the url into a string
+		var url = [];
+		for (var key in urlData) {
+			var datum = urlData[key];
+			url.push(key + "=" + datum);
+		}
+		url = url.join('&');
+		
+		// Go to page
+		console.log(url);
+		$location.url(page + "?" + url);
+	}
+});
+

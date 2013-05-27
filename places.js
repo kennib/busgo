@@ -1,4 +1,4 @@
-function placesCtrl($scope, $routeParams, $timeout, Stop, directions) {
+function placesCtrl($scope, $routeParams, $timeout, Stop, directions, busgoLocation) {
 	// Page attributes
 	$scope.placesLink = "places";
 	$scope.mapLink = "map";
@@ -104,5 +104,10 @@ function placesCtrl($scope, $routeParams, $timeout, Stop, directions) {
 			}, true);
 			place.dirs[mode] = dirs;
 		}
+	};
+	
+	// Function to get the url to map the directions
+	$scope.map = function(place) {
+		busgoLocation("map", {endPlace: place});
 	};
 }
