@@ -190,7 +190,7 @@ app.factory('directions', function($timeout) {
 				angular.extend(result, dirs);
 				// Success callback
 				if (success)
-					success(status);
+					success(result, status);
 			} else if (status == google.maps.DirectionsStatus.OVER_QUERY_LIMIT) {
 				// Try getting directions again
 				if (tryagain != undefined)

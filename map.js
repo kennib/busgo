@@ -1,5 +1,6 @@
 function mapCtrl($scope, $routeParams, $location,
-                 Stop, StopTrip, Trip, Shape, colorMap, mapBounds) {
+                 Stop, StopTrip, Trip, Shape,
+                 colorMap, mapBounds, directions) {
 	// Page attributes
 	$scope.mapLink = "map";
 	$scope.busesLink = "buses";
@@ -62,21 +63,18 @@ function mapCtrl($scope, $routeParams, $location,
 	});
 	
 	// Update the directions from the Google directions service
-	var directions = new google.maps.DirectionsService(); 
 	var directionsDisplay = new google.maps.DirectionsRenderer({suppressMarkers: true});
 	var updateDirections = function() {
 		if ($scope.startPos && $scope.endPos) {
-			directions.route({
+			directions({
 				origin: $scope.startPos,
 				destination: $scope.endPos,
 				travelMode: google.maps.TravelMode.TRANSIT
 			}, function(result, status) {
-				if (status == google.maps.DirectionsStatus.OK) {
 					// Show directions on the map
 					directionsDisplay.setMap($scope.map);
 					directionsDisplay.setDirections(result);
-				}
-			});
+			}, true);
 		}
 	};
 	
