@@ -263,6 +263,10 @@ app.factory('busgoLocation', function($location) {
 					urlData.endName = datum.name;
 					urlData.endLat = datum.geometry.location.lat();
 					urlData.endLng = datum.geometry.location.lng();
+					break;
+				case "travelMode":
+					urlData[key] = datum;
+					break;
 			}
 		}
 		
@@ -275,7 +279,6 @@ app.factory('busgoLocation', function($location) {
 		url = url.join('&');
 		
 		// Go to page
-		console.log(url);
 		$location.url(page + "?" + url);
 	}
 });

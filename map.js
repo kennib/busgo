@@ -27,6 +27,9 @@ function mapCtrl($scope, $routeParams, $location,
 	// The bus stops connected to the main stop
 	$scope.stopsConnected = {};
 	
+	// Method of travel
+	$scope.travelMode = google.maps.TravelMode.TRANSIT;
+	
 	// Options for the Google map
 	$scope.mapOptions = {
 		zoom: 15,
@@ -70,7 +73,7 @@ function mapCtrl($scope, $routeParams, $location,
 			directions({
 				origin: $scope.startPos,
 				destination: $scope.endPos,
-				travelMode: google.maps.TravelMode.TRANSIT
+				travelMode: $scope.travelMode
 			}, function(result, status) {
 					// Show directions on the map
 					directionsDisplay.setMap($scope.map);
@@ -199,5 +202,9 @@ function mapCtrl($scope, $routeParams, $location,
 		$scope.endPos = routeParams.end;
 		if (routeParams.endName)
 			$scope.end = routeParams.endName;
+	}
+	
+	if (routeParams.travelMode) {
+		$scope.travelMode = routeParams.travelMode;
 	}
 }
