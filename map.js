@@ -1,7 +1,7 @@
 function mapCtrl($scope, $routeParams, $location,
                  Stop, StopTrip, Trip, Shape,
                  colorMap, mapBounds, directions,
-                 busgoParams) {
+                 busgoParams, busgoLocation) {
 	// Page attributes
 	$scope.mapLink = "map";
 	$scope.busesLink = "buses";
@@ -38,6 +38,11 @@ function mapCtrl($scope, $routeParams, $location,
 	
 	// Enable the kinect gestures
 	enableGestures($scope);
+	
+	// Go to the buses page for this stop
+	$scope.busesPage = function(stop) {
+		busgoLocation("buses", {stop: stop.stop_id});
+	}
 	
 	$scope.setBusStop = function(stop) {
 		// Update urls

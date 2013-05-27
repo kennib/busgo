@@ -4,7 +4,7 @@
 	<div ng-repeat="stop in stops" ui-map-marker="" ui-map-name="map"
 		ui-lat="stop.stop_lat" ui-lng="stop.stop_lon"
 		ui-title="stop.stop_name" ui-icon="'mapicons/busstop.png'"
-		ui-event="{'map-click':'setBusStop(stop)'}"></div>
+		ui-event="{'map-click':'busesPage(stop)'}"></div>
 	
 	<div ui-map-marker="stopMainMarker" ui-map-name="map"
 		ui-lat="stopMain.stop_lat" ui-lng="stopMain.stop_lon"

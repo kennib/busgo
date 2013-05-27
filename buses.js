@@ -1,4 +1,4 @@
-function busesCtrl($scope, $routeParams, $timeout, $route,
+function busesCtrl($scope, $routeParams, $timeout,
                    Stop, Parse) {
 	// Page attributes
 	$scope.busesLink = "buses";
@@ -9,14 +9,14 @@ function busesCtrl($scope, $routeParams, $timeout, $route,
 	$scope.routes = {};
 	$scope.selectedRoutes = [];
 	
-	if ($routeParams.stopId) {
+	if ($routeParams.stop) {
 		// Update links
-		$scope.placesLink = "places/stop/"+$routeParams.stopId;
-		$scope.mapLink = "map?stop="+$routeParams.stopId;
+		$scope.placesLink = "places/stop/"+$routeParams.stop;
+		$scope.mapLink = "map?stop="+$routeParams.stop;
 	}
 	
 	// Get the stop
-	var stopId = $routeParams.stopId;
+	var stopId = $routeParams.stop;
 	Stop.query({
 		where: JSON.stringify({
 			stop_id: stopId

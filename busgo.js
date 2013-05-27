@@ -265,6 +265,7 @@ app.factory('busgoLocation', function($location) {
 					urlData.endLng = datum.geometry.location.lng();
 					break;
 				case "travelMode":
+				case "stop":
 					urlData[key] = datum;
 					break;
 			}
