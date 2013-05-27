@@ -1,4 +1,4 @@
-function placesCtrl($scope, $routeParams, $timeout, Stop) {
+function placesCtrl($scope, $routeParams, $timeout, Stop, directions) {
 	// Page attributes
 	$scope.placesLink = "places";
 	$scope.mapLink = "map";
@@ -88,39 +88,21 @@ function placesCtrl($scope, $routeParams, $timeout, Stop) {
 	
 	// Get the directions from the Google directions service
 	$scope.travelModes = ["TRANSIT", "WALKING"];
-	var directions = new google.maps.DirectionsService(); 
-	var directionsDisplay = new google.maps.DirectionsRenderer({suppressMarkers: true});
 	$scope.getDirections = function(place) {
 		// Reset directions
 		place.dirs = {};
-		
 		// Get directions for each mode of travel
 		for (var m in $scope.travelModes) {
 			var mode = $scope.travelModes[m];
-			var dirs = function (mode) {
-			directions.route({
+			var dirs = directions({
 				origin: $scope.location,
 				destination: place.geometry.location,
 				travelMode: google.maps.TravelMode[mode]
-			}, function(result, status) {
-				if (status == google.maps.DirectionsStatus.OK) {
-					// At the data for the trip to the place
-					place.dirs[mode] = result;
-					if (result.routes.length > 0) {
-						var route = result.routes[0];
-						if (route.legs.length > 0) {
-							var leg = route.legs[0];
-							
-							// Get the duration and distance
-							place.dirs[mode].distance = leg.distance;
-							place.dirs[mode].duration = leg.duration;
-						}
-					}
-					place.hasDirections = true;
-					$scope.$apply();
-				}
-			});
-			}(mode);
+			}, function() {
+				place.hasDirections = true;
+				$scope.$apply();
+			}, true);
+			place.dirs[mode] = dirs;
 		}
 	};
 }

@@ -173,3 +173,37 @@ app.directive('busgoHeader', function() {
 	}
 });
 
+// Google maps directions service
+app.factory('directions', function($timeout) {
+	var directions = new google.maps.DirectionsService(); 
+	return function(options, success, tryagain) {
+		var result = {};
+		
+		// The function to receive the directions from the API
+		var getDirs = function(dirs, status) {
+			if (status == google.maps.DirectionsStatus.OK) {
+				// Method to get the set of directions' first route
+				dirs.firstRoute = function() {
+					if (this.routes.length > 0 && this.routes[0].legs.length > 0)
+						return this.routes[0].legs[0];
+				};
+				angular.extend(result, dirs);
+				// Success callback
+				if (success)
+					success(status);
+			} else if (status == google.maps.DirectionsStatus.OVER_QUERY_LIMIT) {
+				// Try getting directions again
+				if (tryagain != undefined)
+					$timeout(function() {
+						directions.route(options, getDirs);
+					}, 2000);
+			}
+		}
+		
+		// Get directions
+		directions.route(options, getDirs);
+		
+		return result;
+	};
+});
+
