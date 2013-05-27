@@ -207,16 +207,48 @@ app.factory('directions', function($timeout) {
 	};
 });
 
+// Get data about places
+app.factory('places', function() {
+	var placesService = new google.maps.places.PlacesService($('<p></p>').get()[0]);
+	
+	return function(options, success, tryagain) {
+		var results = {};
+			
+		// The function to receive the set of places from the API
+		var getPlaces = function(places, status) {
+			if (status == google.maps.places.PlacesServiceStatus.OK) {
+				angular.extend(results, places);
+				// Success callback
+				if (success)
+					success(result, status);
+			} else if (status == google.maps.places.PlacesServiceStatus.OVER_QUERY_LIMIT) {
+				// Try getting places again
+				if (tryagain != undefined)
+					$timeout(function() {
+						placesService.nearbySearch(options, getPlaces);
+					}, 2000);
+			}
+		}
+		
+		// Get places
+		placesService.nearbySearch(options, getPlaces);
+		
+		return results;
+	};
+});
+
 // Transform URL parameters into data
-app.factory('busgoParams', function($routeParams) {
-	return function() {
+app.factory('busgoParams', function() {
+	return function(routeParams) {
 		var data = {};
-		angular.copy($routeParams, data);
+		angular.copy(routeParams, data);
+		
 		if (data.endLat && data.endLng) {
 			data.end = new google.maps.LatLng(data.endLat, data.endLng);
 		}
+		
 		return data;
-	};
+	}
 });
 
 // Move between pages transferring data

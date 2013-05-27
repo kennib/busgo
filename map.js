@@ -1,6 +1,7 @@
 function mapCtrl($scope, $routeParams, $location,
                  Stop, StopTrip, Trip, Shape,
-                 colorMap, mapBounds, directions) {
+                 colorMap, mapBounds, directions,
+                 busgoParams) {
 	// Page attributes
 	$scope.mapLink = "map";
 	$scope.busesLink = "buses";
@@ -142,11 +143,12 @@ function mapCtrl($scope, $routeParams, $location,
 	}
 	
 	// Get the user's location
-	if ($routeParams.stop) {
+	var routeParams = busgoParams($routeParams);
+	if (routeParams.stop) {
 		// Use URL route parameter to find a stop
 		Stop.query({
 			where: JSON.stringify({
-				stop_id: $routeParams.stop
+				stop_id: routeParams.stop
 			})
 		}).then(function(stops) {
 			if (stops.length > 0) {
@@ -190,5 +192,12 @@ function mapCtrl($scope, $routeParams, $location,
 			closestStops(sydney.lat(), sydney.lng(), $scope.stopDistance);
 			$scope.start = "Sydney";
 		});
+	}
+	
+	// Get destination
+	if (routeParams.end) {
+		$scope.endPos = routeParams.end;
+		if (routeParams.endName)
+			$scope.end = routeParams.endName;
 	}
 }
