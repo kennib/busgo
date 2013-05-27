@@ -173,7 +173,7 @@ button.selected {
 }
 
 .pageList > li:hover {
-	background-color: BCD166;
+	background-color: #E5F79E;
 }
 
 .pageList > li > figure {
@@ -282,6 +282,13 @@ a[href="http://zigfu.com/watermark"] {
 	margin: 10px;
 	
 	text-align: center;
+	
+	color: white;
+	background-color: #627341;
+}
+
+.place > div > figure:hover {
+	background-color: #BCD166;
 }
 
 .place > div > figure img {
