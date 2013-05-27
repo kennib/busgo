@@ -13,7 +13,7 @@ function mapCtrl($scope, $routeParams, $location,
 	// Bus stops accessible by id
 	$scope.stops = {};
 	// Max distance away a stop can be (in metres)
-	$scope.stopDistance = 500;
+	$scope.stopDistance = 1200;
 	
 	// The start and end points of the destination
 	$scope.start = ""; $scope.startPos = undefined; $scope.startIcon = "mapicons/start.png";
@@ -43,33 +43,6 @@ function mapCtrl($scope, $routeParams, $location,
 	$scope.busesPage = function(stop) {
 		busgoLocation("buses", {stop: stop.stop_id});
 	}
-	
-	$scope.setBusStop = function(stop) {
-		// Update urls
-		$location.replace();
-		$location.search("stop", stop.stop_id);
-		$scope.busesLink = "buses/stop/"+stop.stop_id;
-		$scope.placesLink = "places/stop/"+stop.stop_id;
-		
-		// Set this as the main stop
-		$scope.stopMain = stop;
-		// Move the map to the stop
-		var pos = new google.maps.LatLng(stop.stop_lat, stop.stop_lon);
-		$scope.map.panTo(pos);
-		
-		// Update start of the trip
-		if (!$scope.start)
-			$scope.start = stop.stop_lat + ", " + stop.stop_lon;
-		
-		// Get the bus stops within a certain distance
-		closestStops(stop.stop_latlng.latitude, stop.stop_latlng.longitude, $scope.stopDistance);
-	};
-	
-	// Update the closest bus stops on change of distance
-	$scope.$watch('stopDistance', function() {
-		if ($scope.stopMain)
-			closestStops($scope.stopMain.stop_latlng.latitude, $scope.stopMain.stop_latlng.longitude, $scope.stopDistance);
-	});
 	
 	// Update the directions from the Google directions service
 	var directionsDisplay = new google.maps.DirectionsRenderer({suppressMarkers: true});
@@ -122,6 +95,10 @@ function mapCtrl($scope, $routeParams, $location,
 	// Update directions when positions are changed
 	$scope.$watch('startPos', function(newPos) {
 		updateDirections();
+		if (newPos != undefined) {
+			closestStops(newPos.lat(), newPos.lng(), $scope.stopDistance);
+			$scope.map.panTo(newPos);
+		}
 	});
 	$scope.$watch('endPos', function(newPos) {
 		updateDirections();
@@ -158,7 +135,6 @@ function mapCtrl($scope, $routeParams, $location,
 			if (stops.length > 0) {
 				// Set this as the main bus stop
 				var stop = stops[0];
-				$scope.setBusStop(stop);
 				// Set this as the start location
 				$scope.startPos = new google.maps.LatLng(stop.stop_lat, stop.stop_lon);
 				$scope.start = "Bus Stop at " + stop.stop_name;
@@ -187,7 +163,6 @@ function mapCtrl($scope, $routeParams, $location,
 				if (stops.length > 0) {
 					// Set this as the main bus stop
 					var stop = stops[0];
-					$scope.setBusStop(stop);
 				}
 			});
 		}, function() {
