@@ -2,3 +2,7 @@ aside h2 {
 	margin: 0px;
 	padding: 3px;
 }
+
+aside form > p {
+	margin: 2px;
+}
