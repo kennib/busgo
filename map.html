@@ -1,20 +1,5 @@
 <busgo-header selected="map"></busgo-header>
 
-<div id="mapDisplay" ui-map="map" ui-options="mapOptions">
-	<div ng-repeat="stop in stops" ui-map-marker="" ui-map-name="map"
-		ui-lat="stop.stop_lat" ui-lng="stop.stop_lon"
-		ui-title="stop.stop_name" ui-icon="'mapicons/busstop.png'"
-		ui-event="{'map-click':'busesPage(stop)'}"></div>
-	
-	<div ui-map-marker="marker" ui-map-name="map"
-		ui-latlng="startPos"
-		ui-icon="startIcon" ui-icon-width="30" ui-icon-height="35"></div>
-	
-	<div ui-map-marker="marker" ui-map-name="map"
-		ui-latlng="endPos"
-		ui-icon="endIcon" ui-icon-width="30" ui-icon-height="35"></div>
-</div>
-
 <aside id="mapControls">
 	<div>
 		<h2>Plan A Trip</h2>
@@ -32,3 +17,18 @@
 		</form>
 	</div>
 </aside>
+
+<div id="mapDisplay" ui-map="map" ui-options="mapOptions">
+	<div ng-repeat="stop in stops" ui-map-marker="" ui-map-name="map"
+		ui-lat="stop.stop_lat" ui-lng="stop.stop_lon"
+		ui-title="stop.stop_name" ui-icon="'mapicons/busstop.png'"
+		ui-event="{'map-click':'busesPage(stop)'}"></div>
+	
+	<div ui-map-marker="marker" ui-map-name="map"
+		ui-latlng="startPos"
+		ui-icon="startIcon" ui-icon-width="30" ui-icon-height="35"></div>
+	
+	<div ui-map-marker="marker" ui-map-name="map"
+		ui-latlng="endPos"
+		ui-icon="endIcon" ui-icon-width="30" ui-icon-height="35"></div>
+</div>
