@@ -108,6 +108,9 @@ function placesCtrl($scope, $routeParams, $timeout, Stop, directions, busgoLocat
 	
 	// Function to get the url to map the directions
 	$scope.map = function(place, mode) {
-		busgoLocation("map", {endPlace: place, travelMode: mode});
+		var data = {endPlace: place, travelMode: mode};
+		if ($routeParams.stopId)
+			data.stop = $routeParams.stopId;
+		busgoLocation("map", data);
 	};
 }
