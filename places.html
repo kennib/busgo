@@ -6,7 +6,7 @@
 		<h2>Search</h2>
 		<form>
 			<p>
-				<label>Search Places</label><input ng-model="search">
+				<input ng-model="search" placeholder="Search for places">
 			</p>
 			<p ng-switch on="types">
 				<select id="typeSelect" multiple ng-model="types" ng-options="type|prettify for type in validTypes"></select>
