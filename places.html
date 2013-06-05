@@ -8,9 +8,6 @@
 			<p>
 				<label>Search Places</label><input ng-model="search">
 			</p>
-			<p>
-				<label>Search Radius</label><input ng-model="radius"><label>m</label>
-			</p>
 			<p ng-switch on="types">
 				<select id="typeSelect" multiple ng-model="types" ng-options="type|prettify for type in validTypes"></select>
 				<ul id="typeList">
