@@ -247,6 +247,20 @@ a[href="http://zigfu.com/watermark"] {
 	display: inline-block;
 }
 
+#typeList > li > button {
+	height: 80px;
+	text-align: center;
+}
+
+#typeList > li > button > *{
+	display: block;
+}
+
+#typeList > li > button > img {
+	height: 50px;
+	margin: auto auto;
+}
+
 .place {
 	display: flex;
 	display: -webkit-flex;
@@ -283,6 +297,10 @@ a[href="http://zigfu.com/watermark"] {
 	flex: 0 0 auto;
 	-webkit-flex: 0 0 auto;
 	min-height: 30px;
+}
+
+.place #directions img {
+	height: 60px;
 }
 
 .place > div > figure {

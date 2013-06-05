@@ -12,7 +12,10 @@
 				<select id="typeSelect" multiple ng-model="types" ng-options="type|prettify for type in validTypes"></select>
 				<ul id="typeList">
 					<li ng-repeat="type in mainTypes">
-						<button class="typeButton" ng-click="setTypes(type)" class="{{ type|in:types |true:'selected'|false:'' }}">{{type | prettify}}</button>
+						<button class="typeButton" ng-click="setTypes(type)" class="{{ type|in:types |true:'selected'|false:'' }}">
+						<img ng-src="icons/{{type}}.svg">
+						{{type | prettify}}
+						</button>
 					</li>
 				</ul>
 			</p>
@@ -29,7 +32,7 @@
 				<div>
 					<div class="header">
 						<h2>{{place.name}}</h2>
-						<button ng-click="getDirections(place)">Get Time/Distance</button>
+						<button id="directions"ng-click="getDirections(place)"><img src="icons/directions.svg"></button>
 					</div>
 					<figure ng-repeat="mode in travelModes" ng-show="place.hasDirections" ng-click="map(place, mode)">
 						<p>{{mode}}</p>
