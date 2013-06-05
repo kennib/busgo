@@ -12,9 +12,12 @@
 				<label>Search Radius</label><input ng-model="radius"><label>m</label>
 			</p>
 			<p ng-switch on="types">
-				<label>Place Types</label><br>
 				<select id="typeSelect" multiple ng-model="types" ng-options="type|prettify for type in validTypes"></select>
-				<button class="typeButton" ng-repeat="type in mainTypes" ng-click="setTypes(type)" class="{{ type|in:types |true:'selected'|false:'' }}">{{type | prettify}}</button>
+				<ul id="typeList">
+					<li ng-repeat="type in mainTypes">
+						<button class="typeButton" ng-click="setTypes(type)" class="{{ type|in:types |true:'selected'|false:'' }}">{{type | prettify}}</button>
+					</li>
+				</ul>
 			</p>
 		</form>
 	</div>
