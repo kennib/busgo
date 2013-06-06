@@ -168,7 +168,7 @@ function mapCtrl($scope, $routeParams, $location,
 			});
 		}, function() {
 			// Can't get user's location, assume Sydney
-			var sydney = new google.maps.LatLng(-33.883367,151.205946);
+			var sydney = new google.maps.LatLng(-33.888738,151.192109);
 			$scope.startPos = sydney;
 			$scope.map.panTo(sydney);
 			closestStops(sydney.lat(), sydney.lng(), $scope.stopDistance);

@@ -48,7 +48,7 @@ function placesCtrl($scope, $routeParams, $timeout, Stop, directions, busgoLocat
 			placeSearch();
 		}, function() {
 			// Can't get user's location, assume Sydney
-			var sydney = new google.maps.LatLng(-33.883367,151.205946);
+			var sydney = new google.maps.LatLng(-33.888738,151.192109);
 			$scope.location = sydney;
 		});
 	}
