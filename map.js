@@ -138,6 +138,7 @@ function mapCtrl($scope, $routeParams, $location,
 				// Set this as the start location
 				$scope.startPos = new google.maps.LatLng(stop.stop_lat, stop.stop_lon);
 				$scope.start = "Bus Stop at " + stop.stop_name;
+				$scope.busesLink = "buses?stop="+stop.stop_id;
 			}
 		});
 	} else {
