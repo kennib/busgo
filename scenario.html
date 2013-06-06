@@ -1,0 +1,22 @@
+<!doctype html>
+<html>
+	<head>
+		<title>Busgo Scenario</title>
+		<style type="text/css">
+			iframe html {
+				zoom: 45%;
+			}
+		</style>
+		<script>
+			function zoom() {
+				var iframe = document.getElementById('busgoFrame');
+				var html = iframe.contentDocument.getElementsByTagName('html')[0];
+				html.setAttribute('style', 'zoom: 35%');
+			}
+		</script>
+	</head>
+	<body style="margin: 0px; padding: 0px;">
+		<img src="images/bus_stop.jpg" style="z-index: -1; position: absolute; height: 970px;">
+		<iframe id="busgoFrame" style="width: 230px; height: 400px; position: absolute; top: 250px; left: 870px; border: outset 5px #333;" src="busgo.html#/map?stop=205039" onload="zoom()">
+	</body>
+</html>
