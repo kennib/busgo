@@ -17,7 +17,7 @@
 </aside>
 
 <div id="mapDisplay" ui-map="map" ui-options="mapOptions">
-	<div ng-repeat="stop in stops" ui-map-marker="" ui-map-name="map"
+	<div ng-repeat="stop in stops" ui-map-marker="marker" ui-map-name="map"
 		ui-lat="stop.stop_lat" ui-lng="stop.stop_lon"
 		ui-title="stop.stop_name" ui-icon="'mapicons/busstop.png'"
 		ui-event="{'map-click':'busesPage(stop)'}"></div>
