@@ -13,7 +13,11 @@ body {
 	flex-direction: column;
 	-webkit-flex-direction: column;
 	
+	margin: auto auto;
 	min-height: 100%;
+	max-width: 800px;
+
+	background-color: #FFF;
 }
 
 #busgo > aside,
