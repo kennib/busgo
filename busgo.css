@@ -34,14 +34,16 @@ header {
 header > nav {
 	display: flex;
 	display: -webkit-flex;
+	display: -webkit-box;
 	align-items: center;
 	-webkit-align-items: center;
 }
 
 header > nav > * {
-	display: inline-block;
+	display: block;
 	flex: 1 1;
 	-webkit-flex: 1 1;
+	-webkit-box-flex: 1;
 	
 	width: 30%;
 
@@ -89,6 +91,7 @@ aside {
 aside h2 {
 	flex: 1 1 auto;
 	-webkit-flex: 1 1 auto;
+	-webkit-box-flex: 1;
 	
 	margin: 4px;
 	padding: 4px;
@@ -100,6 +103,7 @@ aside h2 {
 aside > div {
 	flex: 1 1 auto;
 	-webkit-flex: 1 1 auto;
+	-webkit-box-flex: 1;
 	
 	margin: 4px;
 	
@@ -113,20 +117,26 @@ aside > div > * {
 aside form > p {
 	display: flex;
 	display: -webkit-flex;
+	display: -webkit-box;
 	align-items: center;
 	-webkit-align-items: center;
 	flex-wrap: wrap;
 	-webkit-flex-wrap: wrap;
 }
 
+aside form > p  > *{
+	-webkit-box-flex: 1;
+}
+
 aside form label {
-	display: inline-block;
+	display: block;
 	font-size: 1.1em;
 	min-width: 40px;
 }
 
 aside form input,
 aside form select {
+	display: block;
 	font-size: 1.6em;
 	width: 70%;
 	margin: 0px 8px;
@@ -164,6 +174,7 @@ button.selected {
 .pageList > li {
 	display: flex;
 	display: -webkit-flex;
+	display: -webkit-box;
 	-webkit-align-items: center;
 	align-items: center;
 	
@@ -198,6 +209,7 @@ button.selected {
 #busgo > #mapDisplay {
 	flex: 1 1 auto;
 	-webkit-flex: 1 1 auto;
+	-webkit-box-flex: 1;
 	
 	width: 100%;
 	min-height: 60%;
@@ -206,6 +218,7 @@ button.selected {
 #mapControls #busList {
 	display: flex;
 	display: -webkit-flex;
+	display: -webkit-box;
 	flex-wrap: wrap;
 	-webkit-flex-wrap: wrap;
 	
@@ -275,20 +288,24 @@ a[href="http://zigfu.com/watermark"] {
 .place > div {
 	flex: 1 1 auto;
 	-webkit-flex: 1 1 auto;
+	-webkit-box-flex: 1;
 }
 
 .place .header {
 	display: flex;
 	display: -webkit-flex;
+	display: -webkit-box;
 	align-items: center;
 	-webkit-align-items: center;
 	justify-content: flex-end;
 	-webkit-justify-content: flex-end;
+	-webkit-box-pack: end;
 }
 
 .place .header h2 {
 	flex: 1 1 auto;
 	-webkit-flex: 1 1 auto;
+	-webkit-box-flex: 1;
 	
 	margin: 5px;
 }
@@ -296,6 +313,7 @@ a[href="http://zigfu.com/watermark"] {
 .place button {
 	flex: 0 0 auto;
 	-webkit-flex: 0 0 auto;
+	-webkit-box-flex: 0;
 	min-height: 30px;
 }
 
